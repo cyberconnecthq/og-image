@@ -54,6 +54,7 @@ function getArray(stringOrArray: string[] | string | undefined): string[] {
 }
 
 function getDefaultImages(images: string[], theme: Theme): string[] {
+  console.log(theme);
   // console.log(images);
   // const defaultImage =
   //   theme === "light"
