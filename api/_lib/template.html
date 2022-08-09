@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .wrapper {
+        width: 470px;
+        height: 310px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .bg {
+        width: 100%;
+        height: 100%;
+        background-image: url("https://lh3.googleusercontent.com/AfF3qUt5x2m2eiOq0SSA1LeGgmYY-dFTOi7JVGpYrmDpN-oG-tCfMPKEMWaEzgq0HtGaBC2WubMRGOOeUJuh9nsi8DEtHHPHnc0C8A=w600");
+        filter: blur(10px);
+        -webkit-filter: blur(10px);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .card-wrapper {
+        width: 385px;
+        height: 228px;
+        display: flex;
+        position: relative;
+        background-image: url("./card-bg.svg");
+        background-position: top center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="bg"></div>
+      <div class="card-wrapper">
+        <div class="avatar"></div>
+        <div class="display-name">Wanghanyang<span>.eth</span></div>
+        <div class="title"></div>
+      </div>
+    </div>
+  </body>
+</html>
