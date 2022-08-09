@@ -2,20 +2,8 @@ import { readFileSync } from "fs";
 import { marked } from "marked";
 import { sanitizeHtml } from "./sanitizer";
 import { ParsedRequest } from "./types";
-const twemoji = require("twemoji");
-const twOptions = { folder: "svg", ext: ".svg" };
-const emojify = (text: string) => twemoji.parse(text, twOptions);
 
-const rglr = readFileSync(
-  `${__dirname}/../_fonts/Inter-Regular.woff2`
-).toString("base64");
 const outfit = readFileSync(`${__dirname}/../_fonts/Outfit.woff2`).toString(
-  "base64"
-);
-const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString(
-  "base64"
-);
-const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString(
   "base64"
 );
 const bgImage = readFileSync(`${__dirname}/card-bg.svg`).toString("base64");
@@ -64,15 +52,13 @@ function getCss() {
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
         U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
-
-
-    body {
+    html,body {
         margin:0;padding:0;
         font-family:'Outfit';
     }
     .wrapper {
-      width: 510px;
-      height: 350px;
+      width: 540px;
+      height: 380px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -100,35 +86,73 @@ function getCss() {
       flex-direction: column;
       position: relative;
       background-image: url(data:image/svg+xml;base64,${bgImage});
-      background-position: top center;
+      background-position:center;
       background-repeat: no-repeat;
-      background-size: cover;
-      padding:30px;
+      background-size: 100% 100%;
+      padding:40px;
     }
     .avatar{
-      margin-bottom:30px;
-      border:7px solid #fff;
-      border-radius:1000px;
-      width:60px;
-      height:60px;
+      position:relative;
+      width:74px;
+      height:74px;
+      overflow:hidden;
+      margin-bottom:40px;
+      margin-top:12px;
     }
-    .avatar img{
+    .hexagon{
+      width: 82px;
+      height: 82px;
+      background-color: #fff;
+      overflow: hidden;
+      box-sizing: content-box;
+      clip-path:polygon(92.32051% 40%, 93.79385% 43.1596%, 94.69616% 46.52704%, 95% 50%, 94.69616% 53.47296%, 93.79385% 56.8404%, 92.32051% 60%, 79.82051% 81.65064%, 77.82089% 84.50639%, 75.35575% 86.97152%, 72.5% 88.97114%, 69.3404% 90.44449%, 65.97296% 91.34679%, 62.5% 91.65064%, 37.5% 91.65064%, 34.02704% 91.34679%, 30.6596% 90.44449%, 27.5% 88.97114%, 24.64425% 86.97152%, 22.17911% 84.50639%, 20.17949% 81.65064%, 7.67949% 60%, 6.20615% 56.8404%, 5.30384% 53.47296%, 5% 50%, 5.30384% 46.52704%, 6.20615% 43.1596%, 7.67949% 40%, 20.17949% 18.34936%, 22.17911% 15.49361%, 24.64425% 13.02848%, 27.5% 11.02886%, 30.6596% 9.55551%, 34.02704% 8.65321%, 37.5% 8.34936%, 62.5% 8.34936%, 65.97296% 8.65321%, 69.3404% 9.55551%, 72.5% 11.02886%, 75.35575% 13.02848%, 77.82089% 15.49361%, 79.82051% 18.34936%);
       display:flex;
-      border-radius:1000px;
-      width:100%;
+      align-items:center;
+      justify-content:center;
+      margin-top:5px;
+      margin-left:-4px;
+    }
+    .hexagon div{
+      backgrounc-color:#fff;
+      clip-path:polygon(92.32051% 40%, 93.79385% 43.1596%, 94.69616% 46.52704%, 95% 50%, 94.69616% 53.47296%, 93.79385% 56.8404%, 92.32051% 60%, 79.82051% 81.65064%, 77.82089% 84.50639%, 75.35575% 86.97152%, 72.5% 88.97114%, 69.3404% 90.44449%, 65.97296% 91.34679%, 62.5% 91.65064%, 37.5% 91.65064%, 34.02704% 91.34679%, 30.6596% 90.44449%, 27.5% 88.97114%, 24.64425% 86.97152%, 22.17911% 84.50639%, 20.17949% 81.65064%, 7.67949% 60%, 6.20615% 56.8404%, 5.30384% 53.47296%, 5% 50%, 5.30384% 46.52704%, 6.20615% 43.1596%, 7.67949% 40%, 20.17949% 18.34936%, 22.17911% 15.49361%, 24.64425% 13.02848%, 27.5% 11.02886%, 30.6596% 9.55551%, 34.02704% 8.65321%, 37.5% 8.34936%, 62.5% 8.34936%, 65.97296% 8.65321%, 69.3404% 9.55551%, 72.5% 11.02886%, 75.35575% 13.02848%, 77.82089% 15.49361%, 79.82051% 18.34936%);
+      overflow:hidden;
+    }
+    .hexagon>div>img{
+      width:70px;
+      height:70px;
+      object-fit:contain;
+    }
+    .avatar>img{
+      display:flex;
+      border-radius:10000px;
+      width:calc(100% - 14px);
+      height:calc(100% - 14px);
+      background-color:#fff;
+      border:7px solid #fff;
+      clip: padding-box;
     }
     .display-name{
       color:#fff;
       font-style: normal;
       font-weight: 700;
-      font-size: 26px;
+      font-size: 30px;
       margin-bottom: 10px;
+      letter-spacing:1px;
+    }
+    .display-name span{
+      color: rgba(255, 255, 255, 0.3);
+    }
+    .title{
+      font-family: 'Outfit';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
     }
     `;
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-  const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
   return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -138,18 +162,43 @@ export function getHtml(parsedReq: ParsedRequest) {
         ${getCss()}
     </style>
     <body>
-      ${getImage(images[0])}
+      ${getImage(parsedReq)}
     </body>
 </html>`;
 }
 
-function getImage(src: string, width = "1200", height = "630") {
+function getImage(parsedReq: ParsedRequest) {
+  const {
+    displayName,
+    displayNameType,
+    title,
+    organization,
+    avatar,
+    avatarType,
+  } = parsedReq;
+  let displayNameEle;
+
+  if (displayNameType == "ENS") {
+    displayNameEle = `<div class="display-name">${displayName.slice(
+      0,
+      -4
+    )}<span>.eth</span></div>`;
+  } else {
+    displayNameEle = `<div class="display-name">${displayName}</div>`;
+  }
+  const avatarEle =
+    avatarType == "GENERAL"
+      ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
+      : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
+  const titleELe = `<div class="title">${title} ${
+    organization ? "at " + organization : ""
+  }</div>`;
   return `<div class="wrapper">
   <div class="bg"></div>
   <div class="card-wrapper">
-    <div class="avatar"><img src="https://lh3.googleusercontent.com/AfF3qUt5x2m2eiOq0SSA1LeGgmYY-dFTOi7JVGpYrmDpN-oG-tCfMPKEMWaEzgq0HtGaBC2WubMRGOOeUJuh9nsi8DEtHHPHnc0C8A=w600"/></div>
-    <div class="display-name">Wanghanyang<span>.eth</span></div>
-    <div class="title"></div>
+    ${avatarEle}
+    ${displayNameEle}
+    ${titleELe}
   </div>
 </div>`;
 }

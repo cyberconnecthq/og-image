@@ -19,10 +19,9 @@ export default async function handler(
       res.end(html);
       return;
     }
-    const { fileType } = parsedReq;
-    const file = await getScreenshot(html, fileType, isDev);
+    const file = await getScreenshot(html, "png", isDev);
     res.statusCode = 200;
-    res.setHeader("Content-Type", `image/${fileType}`);
+    res.setHeader("Content-Type", `image/${"png"}`);
     res.setHeader(
       "Cache-Control",
       `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`

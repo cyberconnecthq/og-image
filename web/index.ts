@@ -201,6 +201,12 @@ interface AppState extends ParsedRequest {
   widths: string[];
   heights: string[];
   overrideUrl: URL | null;
+  theme?: string;
+  images?: any;
+  fileType: any;
+  md: any;
+  text: any;
+  fontSize: any;
 }
 
 type SetState = (state: Partial<AppState>) => void;
@@ -217,13 +223,13 @@ const App = (_: any, state: AppState, setState: SetState) => {
 
     setState({ ...newState, loading: true });
   };
+  const fileType = "png";
+  const fontSize = "100px";
+  const theme = "light";
+  const md = true;
+  const text = "**Hello** World";
+  const images = [imageLightOptions[0].value];
   const {
-    fileType = "png",
-    fontSize = "100px",
-    theme = "light",
-    md = true,
-    text = "**Hello** World",
-    images = [imageLightOptions[0].value],
     widths = [],
     heights = [],
     showToast = false,
