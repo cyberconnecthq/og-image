@@ -7,7 +7,7 @@ const outfit = readFileSync(`${__dirname}/../_fonts/Outfit.woff2`).toString(
   "base64"
 );
 const bgImage = readFileSync(`${__dirname}/card-bg.svg`).toString("base64");
-function getCss() {
+function getCss(parsedReq: ParsedRequest) {
   return `
     @font-face {
         font-family: 'Outfit';
@@ -67,7 +67,7 @@ function getCss() {
     .bg {
       width: 100%;
       height: 100%;
-      background-image: url("https://lh3.googleusercontent.com/AfF3qUt5x2m2eiOq0SSA1LeGgmYY-dFTOi7JVGpYrmDpN-oG-tCfMPKEMWaEzgq0HtGaBC2WubMRGOOeUJuh9nsi8DEtHHPHnc0C8A=w600");
+      background-image: url("${parsedReq.avatar}");
       filter: blur(10px);
       -webkit-filter: blur(10px);
       background-position: center;
@@ -159,7 +159,7 @@ export function getHtml(parsedReq: ParsedRequest) {
     <title>Generated Image</title>
 
     <style>
-        ${getCss()}
+        ${getCss(parsedReq)}
     </style>
     <body>
       ${getImage(parsedReq)}
