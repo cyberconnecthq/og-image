@@ -8,4 +8,5 @@ export interface ParsedRequest {
   avatarType: "NFT" | "GENERAL";
   title: string;
   organization: string;
+  handle?: string;
 }

@@ -1,103 +1,33 @@
 import { readFileSync } from "fs";
-import { marked } from "marked";
-import { sanitizeHtml } from "./sanitizer";
 import { ParsedRequest } from "./types";
+import getBaseCss from "./getBaseCss";
+import QRCode from "qrcode";
 
-const outfit = readFileSync(`${__dirname}/../_fonts/Outfit.woff2`).toString(
-  "base64"
-);
-const bgImage = readFileSync(`${__dirname}/card-bg.svg`).toString("base64");
+const bgImage = readFileSync(`${__dirname}/nft-card-bg.svg`).toString("base64");
 function getCss(parsedReq: ParsedRequest) {
-  return `
-    @font-face {
-        font-family: 'Outfit';
-        font-style:  normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${outfit}) format('woff2');
-    }
-
-    @font-face {
-      font-family: 'Outfit';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url(data:font/woff2;charset=utf-8;base64,${outfit}) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
-        U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    @font-face {
-      font-family: 'Outfit';
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: url(data:font/woff2;charset=utf-8;base64,${outfit}) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
-        U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    @font-face {
-      font-family: 'Outfit';
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url(data:font/woff2;charset=utf-8;base64,${outfit}) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
-        U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    @font-face {
-      font-family: 'Outfit';
-      font-style: normal;
-      font-weight: 700;
-      font-display: swap;
-      src: url(data:font/woff2;charset=utf-8;base64,${outfit}) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
-        U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    html,body {
-        margin:0;padding:0;
-        font-family:'Outfit';
+  return (
+    getBaseCss() +
+    `
+    *{
+      box-sizing: border-box;
+      border:none;
     }
     .wrapper {
-      width: 540px;
-      height: 380px;
+      width: 345px;
+      height: 553px;
+      padding: 30px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .bg {
-      width: 100%;
-      height: 100%;
-      background-image: url("${parsedReq.avatar}");
-      filter: blur(10px);
-      -webkit-filter: blur(10px);
+      flex-direction: column;
+      background-image: url(data:image/svg+xml;base64,${bgImage});
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index:2;
-    }
-    .card-wrapper {
-      z-index:5;
-      width: 385px;
-      height: 228px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      background-image: url(data:image/svg+xml;base64,${bgImage});
-      background-position:center;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      padding:40px;
     }
     .avatar{
-      position:relative;
-      width:74px;
-      height:74px;
+      width:70px;
+      height:70px;
       overflow:hidden;
-      margin-bottom:40px;
-      margin-top:12px;
+      margin-bottom:20px;
     }
     .hexagon{
       width: 82px;
@@ -125,19 +55,20 @@ function getCss(parsedReq: ParsedRequest) {
     .avatar>img{
       display:flex;
       border-radius:10000px;
-      width:calc(100% - 14px);
-      height:calc(100% - 14px);
+      width:100%;
+      height:100%;
       background-color:#fff;
-      border:7px solid #fff;
+      border:6px solid #fff;
       clip: padding-box;
     }
     .display-name{
       color:#fff;
       font-style: normal;
       font-weight: 700;
-      font-size: 30px;
+      font-size: 26px;
       margin-bottom: 10px;
-      letter-spacing:1px;
+      letter-spacing: 0.8px;
+      word-break: break-word;
     }
     .display-name span{
       color: rgba(255, 255, 255, 0.3);
@@ -146,28 +77,67 @@ function getCss(parsedReq: ParsedRequest) {
       font-family: 'Outfit';
       font-style: normal;
       font-weight: 400;
-      font-size: 16px;
+      font-size: 14px;
       color: rgba(255, 255, 255, 0.7);
     }
-    `;
+    .qrcode-area{
+      width: 100px;
+      height: 100px;
+      margin-bottom: 30px;
+      display: flex;
+      flex:1;
+      flex-direction: column;
+      justify-content: end;
+    }
+    .qrcode-area>img{
+      display: block;
+      width: 100%;
+    }
+    .handle-area{
+      display: flex;
+      margin-bottom:10px;
+      color:#fff;
+      align-items:flex-end;
+      font-weight: 700;
+      font-size: 18px;
+      
+    }
+    .handle-area>div{
+      padding: 0 6px 0 3px;
+      border-radius:4px;
+      transform: skew(-30deg);
+      margin-left:5px;
+      background-color:#fff;
+    }
+    .handle-area>div>span{
+      display:block;
+      max-width: 193px;
+      color: #000;
+      transform: skew(30deg);
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    `
+  );
 }
 
-export function getHtml(parsedReq: ParsedRequest) {
+export async function getDownloadImage(parsedReq: ParsedRequest) {
+  const imgStr = await getImage(parsedReq);
   return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
-
     <style>
         ${getCss(parsedReq)}
     </style>
     <body>
-      ${getImage(parsedReq)}
+      ${imgStr}
     </body>
 </html>`;
 }
 
-function getImage(parsedReq: ParsedRequest) {
+async function getImage(parsedReq: ParsedRequest) {
   const {
     displayName,
     displayNameType,
@@ -175,6 +145,7 @@ function getImage(parsedReq: ParsedRequest) {
     organization,
     avatar,
     avatarType,
+    handle,
   } = parsedReq;
   let displayNameEle;
 
@@ -190,17 +161,20 @@ function getImage(parsedReq: ParsedRequest) {
     avatarType == "GENERAL"
       ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
       : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
+
   const titleELe = `<div class="title">${title} ${
     organization ? "at " + organization : ""
   }</div>`;
+  const qrcodeData = await QRCode.toDataURL("https://link3.to/" + handle, {
+    margin: 0.5,
+  });
   return `<div class="wrapper">
-  <div class="bg"></div>
-  <div class="card-wrapper">
-    ${avatarEle}
-    ${displayNameEle}
-    ${titleELe}
-  </div>
-</div>`;
+            ${avatarEle}
+            ${displayNameEle}
+            ${titleELe}
+            <div class="qrcode-area"><img src="${qrcodeData}"/></div>
+            <div class="handle-area">Link3.to/ <div><span>${handle}</span></div></div>
+          </div>`;
 }
 
 function getPlusSign(i: number) {

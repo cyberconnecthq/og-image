@@ -1,7 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { parseRequest } from "./_lib/parser";
 import { getScreenshot } from "./_lib/chromium";
-import { getHtml } from "./_lib/template";
+import { getHtml } from "./_lib/ogImageTemplate";
+import { parse } from "url";
+import { getDownloadImage } from "./_lib/downloadImageTemplate";
 
 const isDev = !process.env.AWS_REGION;
 const isHtmlDebug = process.env.OG_HTML_DEBUG === "1";
@@ -12,17 +14,28 @@ export default async function handler(
 ) {
   try {
     const parsedReq = parseRequest(req);
-    const html = getHtml(parsedReq);
+    const { pathname } = parse(req.url || "/", true);
+    let html, imageType: "og" | "download";
+    if (pathname == "/og.png") {
+      imageType = "og";
+      html = getHtml(parsedReq);
+    } else {
+      imageType = "download";
+      html = await getDownloadImage(parsedReq);
+    }
 
     if (isHtmlDebug) {
       res.setHeader("Content-Type", "text/html");
       res.end(html);
       return;
     }
-    const file = await getScreenshot(html, "png", isDev);
+    const file = await getScreenshot(html, "png", isDev, imageType);
     res.statusCode = 200;
-    res.setHeader("Content-Type", `image/${"png"}`);
-    res.setHeader("Cache-Control", `no-cache`);
+    // res.setHeader("Content-Type", `image/${"png"}`);
+    res.setHeader(
+      "Cache-Control",
+      `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`
+    );
     res.end(file);
   } catch (e) {
     res.statusCode = 500;

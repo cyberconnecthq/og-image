@@ -16,11 +16,14 @@ async function getPage(isDev: boolean) {
 export async function getScreenshot(
   html: string,
   type: FileType,
-  isDev: boolean
+  isDev: boolean,
+  imageType: "og" | "download" = "og"
 ) {
   const page = await getPage(isDev);
-  await page.setViewport({ width: 540, height: 380, deviceScaleFactor: 2 });
+  const width = imageType === "og" ? 540 : 345;
+  const height = imageType === "og" ? 380 : 553;
+  await page.setViewport({ width, height, deviceScaleFactor: 2 });
   await page.setContent(html);
-  const file = await page.screenshot({ type });
+  const file = await page.screenshot({ type, omitBackground: true });
   return file;
 }

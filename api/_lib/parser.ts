@@ -12,6 +12,7 @@ export function parseRequest(req: IncomingMessage) {
     organization,
     avatar,
     avatarType,
+    handle,
   } = query;
   // const { fontSize, images, widths, heights, theme, md } = query || {};
   // // console.log(images);
@@ -53,6 +54,7 @@ export function parseRequest(req: IncomingMessage) {
       : avatarType == "GENERAL" || avatarType == "NFT"
       ? avatarType
       : "GENERAL",
+    handle: Array.isArray(handle) ? handle[0] : handle || "",
   };
   // parsedRequest.images = getDefaultImages(
   //   parsedRequest.images,
