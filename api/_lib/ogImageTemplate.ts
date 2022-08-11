@@ -8,6 +8,7 @@ const outfit = readFileSync(`${__dirname}/../_fonts/Outfit.woff2`).toString(
   "base64"
 );
 const bgImage = readFileSync(`${__dirname}/og-card-bg.svg`).toString("base64");
+const dotBgImage = readFileSync(`${__dirname}/dot-bg.png`).toString("base64");
 function getCss(parsedReq: ParsedRequest) {
   return (
     getBaseCss() +
@@ -34,6 +35,18 @@ function getCss(parsedReq: ParsedRequest) {
       top: -2.5%;
       left: -2.5%;
       z-index:2;
+    }
+    .dot-bg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top:0;
+      left:0;
+      background-image: url(data:image/png;base64,${dotBgImage});
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index:3;
     }
     .card-wrapper {
       z-index:5;
@@ -153,6 +166,7 @@ function getImage(parsedReq: ParsedRequest) {
   }</div>`;
   return `<div class="wrapper">
   <div class="bg"></div>
+  <div class="dot-bg"></div>
   <div class="card-wrapper">
     ${avatarEle}
     ${displayNameEle}

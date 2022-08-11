@@ -4,7 +4,7 @@ import getBaseCss from "./getBaseCss";
 import QRCode from "qrcode";
 
 const bgImage = readFileSync(`${__dirname}/nft-card-bg.svg`).toString("base64");
-function getCss(parsedReq: ParsedRequest) {
+function getCss() {
   return (
     getBaseCss() +
     `
@@ -129,7 +129,7 @@ export async function getDownloadImage(parsedReq: ParsedRequest) {
     <meta charset="utf-8">
     <title>Generated Image</title>
     <style>
-        ${getCss(parsedReq)}
+        ${getCss()}
     </style>
     <body>
       ${imgStr}
