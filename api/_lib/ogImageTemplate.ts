@@ -107,7 +107,6 @@ function getCss(parsedReq: ParsedRequest) {
       font-weight: 700;
       font-size: 30px;
       margin-bottom: 10px;
-      letter-spacing:0.8px;
     }
     .display-name span{
       color: rgba(255, 255, 255, 0.3);

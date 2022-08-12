@@ -24,6 +24,6 @@ export async function getScreenshot(
   const height = imageType === "og" ? 380 : 553;
   await page.setViewport({ width, height, deviceScaleFactor: 2 });
   await page.setContent(html);
-  const file = await page.screenshot({ type });
+  const file = await page.screenshot({ type, omitBackground: true });
   return file;
 }

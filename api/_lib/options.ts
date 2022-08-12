@@ -14,9 +14,6 @@ interface Options {
 
 export async function getOptions(isDev: boolean) {
   let options: Options;
-  console.log(await chrome.executablePath);
-  console.log("/usr/bin/chromium-browser");
-  console.log(exePath);
   if (isDev) {
     options = {
       args: [],

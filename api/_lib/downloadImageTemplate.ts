@@ -67,7 +67,6 @@ function getCss() {
       font-weight: 700;
       font-size: 26px;
       margin-bottom: 10px;
-      letter-spacing: 0.8px;
       word-break: break-word;
     }
     .display-name span{
@@ -87,7 +86,7 @@ function getCss() {
       display: flex;
       flex:1;
       flex-direction: column;
-      justify-content: end;
+      justify-content: flex-end;
     }
     .qrcode-area>img{
       display: block;

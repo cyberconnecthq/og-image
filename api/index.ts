@@ -5,8 +5,7 @@ import { getHtml } from "./_lib/ogImageTemplate";
 import { parse } from "url";
 import { getDownloadImage } from "./_lib/downloadImageTemplate";
 
-const isDev = !process.env.AWS_REGION;
-const isHtmlDebug = process.env.OG_HTML_DEBUG === "1";
+const isDev = !process.env.IS_PROD;
 
 export default async function handler(
   req: IncomingMessage,
@@ -14,7 +13,8 @@ export default async function handler(
 ) {
   try {
     const parsedReq = parseRequest(req);
-    const { pathname } = parse(req.url || "/", true);
+    const { pathname, query } = parse(req.url || "/", true);
+    const { isHtmlDebug, isDownload } = query;
     let html, imageType: "og" | "download";
     if (pathname == "/og.png") {
       imageType = "og";
@@ -31,11 +31,17 @@ export default async function handler(
     }
     const file = await getScreenshot(html, "png", isDev, imageType);
     res.statusCode = 200;
-    res.setHeader("Content-Type", `image/${"png"}`);
+    res.setHeader("Content-Type", `image/png`);
     res.setHeader(
       "Cache-Control",
       `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`
     );
+    if (isDownload) {
+      res.setHeader(
+        "Content-Disposition",
+        ' attachment; filename="Link3_Profile.png"'
+      );
+    }
     res.end(file);
   } catch (e) {
     res.statusCode = 500;
