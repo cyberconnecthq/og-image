@@ -145,6 +145,7 @@ async function getImage(parsedReq: ParsedRequest) {
     avatar,
     avatarType,
     handle,
+    isVerified,
   } = parsedReq;
   let displayNameEle;
 

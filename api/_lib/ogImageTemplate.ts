@@ -188,6 +188,7 @@ function getImage(parsedReq: ParsedRequest) {
     avatar,
     avatarType,
     type,
+    isVerified,
   } = parsedReq;
   let displayNameEle;
   if (type == "PERSONAL") {
@@ -217,7 +218,11 @@ function getImage(parsedReq: ParsedRequest) {
     </div>`;
   } else {
     const avatarEle = `<div class="avatar org"><img src="${avatar}" alt=""/></div>`;
-    displayNameEle = `<div class="display-name org">${displayName} <img src="data:image/svg+xml;base64,${verifiedIcon}" alt=""></div>`;
+    displayNameEle = `<div class="display-name org">${displayName} ${
+      isVerified
+        ? `<img src="data:image/svg+xml;base64,${verifiedIcon}" alt="">`
+        : ""
+    }</div>`;
     return `<div class="wrapper">
     <div class="bg org-bg"></div>
     <div class="dot-bg"></div>

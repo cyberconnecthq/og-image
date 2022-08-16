@@ -14,6 +14,7 @@ export function parseRequest(req: IncomingMessage) {
     avatarType,
     handle,
     type,
+    isVerified,
   } = query;
   // const { fontSize, images, widths, heights, theme, md } = query || {};
   // // console.log(images);
@@ -61,6 +62,11 @@ export function parseRequest(req: IncomingMessage) {
       : type == "PERSONAL" || type == "ORG"
       ? type
       : "PERSONAL",
+    isVerified: Array.isArray(isVerified)
+      ? false
+      : isVerified == "true"
+      ? true
+      : false,
   };
   // parsedRequest.images = getDefaultImages(
   //   parsedRequest.images,

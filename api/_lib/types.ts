@@ -10,4 +10,5 @@ export interface ParsedRequest {
   organization?: string;
   handle?: string;
   type?: "ORG" | "PERSONAL";
+  isVerified?: boolean;
 }
