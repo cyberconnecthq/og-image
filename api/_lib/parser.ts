@@ -13,6 +13,7 @@ export function parseRequest(req: IncomingMessage) {
     avatar,
     avatarType,
     handle,
+    type,
   } = query;
   // const { fontSize, images, widths, heights, theme, md } = query || {};
   // // console.log(images);
@@ -55,6 +56,11 @@ export function parseRequest(req: IncomingMessage) {
       ? avatarType
       : "GENERAL",
     handle: Array.isArray(handle) ? handle[0] : handle || "",
+    type: Array.isArray(type)
+      ? "PERSONAL"
+      : type == "PERSONAL" || type == "ORG"
+      ? type
+      : "PERSONAL",
   };
   // parsedRequest.images = getDefaultImages(
   //   parsedRequest.images,

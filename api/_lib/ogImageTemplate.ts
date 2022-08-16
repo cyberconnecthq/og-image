@@ -8,6 +8,12 @@ const outfit = readFileSync(`${__dirname}/../_fonts/Outfit.woff2`).toString(
   "base64"
 );
 const bgImage = readFileSync(`${__dirname}/og-card-bg.svg`).toString("base64");
+const ogBgImage = readFileSync(`${__dirname}/og-card-org-bg.svg`).toString(
+  "base64"
+);
+const verifiedIcon = readFileSync(`${__dirname}/verified-icon.svg`).toString(
+  "base64"
+);
 const dotBgImage = readFileSync(`${__dirname}/dot-bg.png`).toString("base64");
 function getCss(parsedReq: ParsedRequest) {
   return (
@@ -36,6 +42,12 @@ function getCss(parsedReq: ParsedRequest) {
       left: -2.5%;
       z-index:2;
     }
+    .bg.org-bg {
+      background-image: none;
+      background-color: #1c1c1c;
+      filter:none;
+      -webkit-filter:none;
+    }
     .dot-bg {
       width: 100%;
       height: 100%;
@@ -55,7 +67,9 @@ function getCss(parsedReq: ParsedRequest) {
       display: flex;
       flex-direction: column;
       position: relative;
-      background-image: url(data:image/svg+xml;base64,${bgImage});
+      background-image: url(data:image/svg+xml;base64,${
+        parsedReq.type == "ORG" ? ogBgImage : bgImage
+      });
       background-position:center;
       background-repeat: no-repeat;
       background-size: 100% 100%;
@@ -101,6 +115,22 @@ function getCss(parsedReq: ParsedRequest) {
       border:6px solid #fff;
       clip: padding-box;
     }
+    .avatar.org{
+      width: 60px;
+      height: 60px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding:6px;
+      border-radius:100px;
+      display:flex;
+      align-items:center;
+    }
+    .avatar.org>img{
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: transparent;
+    }
     .display-name{
       color:#fff;
       font-style: normal;
@@ -110,6 +140,18 @@ function getCss(parsedReq: ParsedRequest) {
     }
     .display-name span{
       color: rgba(255, 255, 255, 0.3);
+    }
+    .display-name.org{
+      margin-top: 37px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .display-name.org img{
+      display:block;
+      width:18px;
+      height:18px;
+      margin-top:5px;
     }
     .title{
       font-family: 'Outfit';
@@ -145,35 +187,44 @@ function getImage(parsedReq: ParsedRequest) {
     organization,
     avatar,
     avatarType,
+    type,
   } = parsedReq;
   let displayNameEle;
-
-  if (displayNameType == "ENS") {
-    displayNameEle = `<div class="display-name">${displayName.slice(
-      0,
-      -4
-    )}<span>.eth</span></div>`;
+  if (type == "PERSONAL") {
+    if (displayNameType == "ENS") {
+      displayNameEle = `<div class="display-name">${displayName.slice(
+        0,
+        -4
+      )}<span>.eth</span></div>`;
+    } else {
+      displayNameEle = `<div class="display-name">${displayName}</div>`;
+    }
+    const avatarEle =
+      avatarType == "GENERAL"
+        ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
+        : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
+    const titleELe = `<div class="title">${title} ${
+      organization ? "at " + organization : ""
+    }</div>`;
+    return `<div class="wrapper">
+      <div class="bg"></div>
+      <div class="dot-bg"></div>
+      <div class="card-wrapper">
+        ${avatarEle}
+        ${displayNameEle}
+        ${titleELe}
+      </div>
+    </div>`;
   } else {
-    displayNameEle = `<div class="display-name">${displayName}</div>`;
+    const avatarEle = `<div class="avatar org"><img src="${avatar}" alt=""/></div>`;
+    displayNameEle = `<div class="display-name org">${displayName} <img src="data:image/svg+xml;base64,${verifiedIcon}" alt=""></div>`;
+    return `<div class="wrapper">
+    <div class="bg org-bg"></div>
+    <div class="dot-bg"></div>
+    <div class="card-wrapper">
+      ${avatarEle}
+      ${displayNameEle}
+    </div>
+  </div>`;
   }
-  const avatarEle =
-    avatarType == "GENERAL"
-      ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
-      : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
-  const titleELe = `<div class="title">${title} ${
-    organization ? "at " + organization : ""
-  }</div>`;
-  return `<div class="wrapper">
-  <div class="bg"></div>
-  <div class="dot-bg"></div>
-  <div class="card-wrapper">
-    ${avatarEle}
-    ${displayNameEle}
-    ${titleELe}
-  </div>
-</div>`;
-}
-
-function getPlusSign(i: number) {
-  return i === 0 ? "" : '<div class="plus">+</div>';
 }

@@ -175,7 +175,3 @@ async function getImage(parsedReq: ParsedRequest) {
             <div class="handle-area">Link3.to/ <div><span>${handle}</span></div></div>
           </div>`;
 }
-
-function getPlusSign(i: number) {
-  return i === 0 ? "" : '<div class="plus">+</div>';
-}

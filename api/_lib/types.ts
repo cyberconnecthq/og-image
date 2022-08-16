@@ -3,10 +3,11 @@ export type Theme = "light" | "dark";
 
 export interface ParsedRequest {
   displayName: string;
-  displayNameType: "ENS" | "GENERAL";
+  displayNameType?: "ENS" | "GENERAL";
   avatar: string;
-  avatarType: "NFT" | "GENERAL";
-  title: string;
-  organization: string;
+  avatarType?: "NFT" | "GENERAL";
+  title?: string;
+  organization?: string;
   handle?: string;
+  type?: "ORG" | "PERSONAL";
 }

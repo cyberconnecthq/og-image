@@ -16,6 +16,7 @@ export default async function handler(
     const { pathname, query } = parse(req.url || "/", true);
     const { isHtmlDebug, isDownload } = query;
     let html, imageType: "og" | "download";
+    // console.log(pathname);
     if (pathname == "/og.png") {
       imageType = "og";
       html = getHtml(parsedReq);
