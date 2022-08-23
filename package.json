@@ -4,7 +4,7 @@
     "build": "tsc -p web/tsconfig.json"
   },
   "dependencies": {
-    "chrome-aws-lambda": "7.0.0",
+    "chrome-aws-lambda": "10.1.0",
     "marked": "4.0.10",
     "puppeteer-core": "13.1.2",
     "qrcode": "1.5.1",

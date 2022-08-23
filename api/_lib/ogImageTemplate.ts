@@ -11,14 +11,18 @@ const emojify = (text: string) => twemoji.parse(text, twOptions);
 const outfit = readFileSync(`${__dirname}/../_fonts/Outfit.woff2`).toString(
   "base64"
 );
-const bgImage = readFileSync(`${__dirname}/og-card-bg.svg`).toString("base64");
-const ogBgImage = readFileSync(`${__dirname}/og-card-org-bg.svg`).toString(
-  "base64"
-);
-const verifiedIcon = readFileSync(`${__dirname}/verified-icon.svg`).toString(
-  "base64"
-);
-const dotBgImage = readFileSync(`${__dirname}/dot-bg.png`).toString("base64");
+const bgImage = readFileSync(
+  `${__dirname}/../assets/og/og-card-bg.svg`
+).toString("base64");
+const ogBgImage = readFileSync(
+  `${__dirname}/../assets/og/og-card-org-bg.svg`
+).toString("base64");
+const verifiedIcon = readFileSync(
+  `${__dirname}/../assets/og/verified-icon.svg`
+).toString("base64");
+const dotBgImage = readFileSync(
+  `${__dirname}/../assets/og/dot-bg.png`
+).toString("base64");
 function getCss(parsedReq: ParsedRequest) {
   return (
     getBaseCss() +
