@@ -3,6 +3,9 @@ import { ParsedRequest } from "./types";
 import getBaseCss from "./getBaseCss";
 import QRCode from "qrcode";
 
+const twemoji = require("twemoji");
+const twOptions = { folder: "svg", ext: ".svg" };
+const emojify = (text: string) => twemoji.parse(text, twOptions);
 const bgImage = readFileSync(`${__dirname}/nft-card-bg.svg`).toString("base64");
 function getCss() {
   return (
@@ -73,6 +76,7 @@ function getCss() {
       color: rgba(255, 255, 255, 0.3);
     }
     .title{
+      display:flex;
       font-family: 'Outfit';
       font-style: normal;
       font-weight: 400;
@@ -116,6 +120,12 @@ function getCss() {
       overflow:hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+    .emoji{
+      width:20px;
+    }
+    .at{
+      margin:0 5px;
     }
     `
   );
@@ -162,16 +172,16 @@ async function getImage(parsedReq: ParsedRequest) {
       ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
       : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
 
-  const titleELe = `<div class="title">${title} ${
-    organization ? "at " + organization : ""
+  const titleELe = `<div class="title">${title}${
+    organization ? "<span class='at'>at</span>" + organization : ""
   }</div>`;
   const qrcodeData = await QRCode.toDataURL("https://link3.to/" + handle, {
     margin: 0.5,
   });
   return `<div class="wrapper">
             ${avatarEle}
-            ${displayNameEle}
-            ${titleELe}
+            ${emojify(displayNameEle)}
+            ${emojify(titleELe)}
             <div class="qrcode-area"><img src="${qrcodeData}"/></div>
             <div class="handle-area">Link3.to/ <div><span>${handle}</span></div></div>
           </div>`;

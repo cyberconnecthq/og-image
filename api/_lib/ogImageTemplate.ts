@@ -3,6 +3,10 @@ import { marked } from "marked";
 import { sanitizeHtml } from "./sanitizer";
 import { ParsedRequest } from "./types";
 import getBaseCss from "./getBaseCss";
+const twemoji = require("twemoji");
+
+const twOptions = { folder: "svg", ext: ".svg" };
+const emojify = (text: string) => twemoji.parse(text, twOptions);
 
 const outfit = readFileSync(`${__dirname}/../_fonts/Outfit.woff2`).toString(
   "base64"
@@ -154,11 +158,18 @@ function getCss(parsedReq: ParsedRequest) {
       margin-top:5px;
     }
     .title{
+      display:flex;
       font-family: 'Outfit';
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
       color: rgba(255, 255, 255, 0.7);
+    }
+    .at{
+      margin:0 5px;
+    }
+    .emoji{
+      width:20px;
     }
     `
   );
@@ -204,16 +215,16 @@ function getImage(parsedReq: ParsedRequest) {
       avatarType == "GENERAL"
         ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
         : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
-    const titleELe = `<div class="title">${title} ${
-      organization ? "at " + organization : ""
+    const titleELe = `<div class="title">${title}${
+      organization ? "<span class='at'>at</span>" + organization : ""
     }</div>`;
     return `<div class="wrapper">
       <div class="bg"></div>
       <div class="dot-bg"></div>
       <div class="card-wrapper">
         ${avatarEle}
-        ${displayNameEle}
-        ${titleELe}
+        ${emojify(displayNameEle)}
+        ${emojify(titleELe)}
       </div>
     </div>`;
   } else {
@@ -223,12 +234,13 @@ function getImage(parsedReq: ParsedRequest) {
         ? `<img src="data:image/svg+xml;base64,${verifiedIcon}" alt="">`
         : ""
     }</div>`;
+
     return `<div class="wrapper">
     <div class="bg org-bg"></div>
     <div class="dot-bg"></div>
     <div class="card-wrapper">
       ${avatarEle}
-      ${displayNameEle}
+      ${emojify(displayNameEle)}
     </div>
   </div>`;
   }
