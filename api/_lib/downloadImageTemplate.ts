@@ -1,14 +1,12 @@
-import { readFileSync } from "fs";
-import { OgRequest } from "./types";
-import getBaseCss from "./getBaseCss";
-import QRCode from "qrcode";
+import { readFileSync } from 'fs';
+import { OgRequest } from './types';
+import getBaseCss from './getBaseCss';
+import QRCode from 'qrcode';
 
-const twemoji = require("twemoji");
-const twOptions = { folder: "svg", ext: ".svg" };
+const twemoji = require('twemoji');
+const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
-const bgImage = readFileSync(
-  `${__dirname}/../assets/og/nft-card-bg.svg`
-).toString("base64");
+const bgImage = readFileSync(`${__dirname}/../_assets/og/nft-card-bg.svg`).toString('base64');
 function getCss() {
   return (
     getBaseCss() +
@@ -149,36 +147,24 @@ export async function getDownloadImage(parsedReq: OgRequest) {
 }
 
 async function getImage(parsedReq: OgRequest) {
-  const {
-    displayName,
-    displayNameType,
-    title,
-    organization,
-    avatar,
-    avatarType,
-    handle,
-    isVerified,
-  } = parsedReq;
+  const { displayName, displayNameType, title, organization, avatar, avatarType, handle, isVerified } = parsedReq;
 
   let displayNameEle;
 
-  if (displayNameType == "ENS") {
-    displayNameEle = `<div class="display-name">${displayName.slice(
-      0,
-      -4
-    )}<span>.eth</span></div>`;
+  if (displayNameType == 'ENS') {
+    displayNameEle = `<div class="display-name">${displayName.slice(0, -4)}<span>.eth</span></div>`;
   } else {
     displayNameEle = `<div class="display-name">${displayName}</div>`;
   }
   const avatarEle =
-    avatarType == "GENERAL"
+    avatarType == 'GENERAL'
       ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
       : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
 
   const titleELe = `<div class="title">${title}${
-    organization ? "<span class='at'>at</span>" + organization : ""
+    organization ? "<span class='at'>at</span>" + organization : ''
   }</div>`;
-  const qrcodeData = await QRCode.toDataURL("https://link3.to/" + handle, {
+  const qrcodeData = await QRCode.toDataURL('https://link3.to/' + handle, {
     margin: 0.5,
   });
   return `<div class="wrapper">

@@ -1,4 +1,5 @@
 import core from 'puppeteer-core';
+import chromium from 'chrome-aws-lambda';
 import { getOptions } from './options';
 import { FileType, ImgType } from './types';
 import { imgSize } from './constants';
@@ -9,7 +10,7 @@ async function getPage(isDev: boolean) {
     return _page;
   }
   const options = await getOptions(isDev);
-  const browser = await core.launch(options);
+  const browser = await chromium.puppeteer.launch(options);
   _page = await browser.newPage();
   return _page;
 }

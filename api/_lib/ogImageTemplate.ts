@@ -1,29 +1,17 @@
-import { readFileSync } from "fs";
-import { marked } from "marked";
-import { sanitizeHtml } from "./sanitizer";
-import { OgRequest } from "./types";
-import getBaseCss from "./getBaseCss";
-const twemoji = require("twemoji");
+import { readFileSync } from 'fs';
+import { marked } from 'marked';
+import { sanitizeHtml } from './sanitizer';
+import { OgRequest } from './types';
+import getBaseCss from './getBaseCss';
+const twemoji = require('twemoji');
 
-const twOptions = { folder: "svg", ext: ".svg" };
+const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
-const outfit = readFileSync(`${__dirname}/../_fonts/Outfit.woff2`).toString(
-  "base64"
-);
-const bgImage = readFileSync(
-  `${__dirname}/../assets/og/og-card-bg.svg`
-).toString("base64");
-const ogBgImage = readFileSync(
-  `${__dirname}/../assets/og/og-card-org-bg.svg`
-).toString("base64");
-const verifiedIcon = readFileSync(
-  `${__dirname}/../assets/og/verified-icon.svg`
-).toString("base64");
-const dotBgImage = readFileSync(
-  `${__dirname}/../assets/og/dot-bg.png`
-).toString("base64");
 function getCss(parsedReq: OgRequest) {
+  const bgImage = readFileSync(`${__dirname}/../_assets/og/og-card-bg.svg`).toString('base64');
+  const ogBgImage = readFileSync(`${__dirname}/../_assets/og/og-card-org-bg.svg`).toString('base64');
+  const dotBgImage = readFileSync(`${__dirname}/../_assets/og/dot-bg.png`).toString('base64');
   return (
     getBaseCss() +
     `
@@ -75,9 +63,7 @@ function getCss(parsedReq: OgRequest) {
       display: flex;
       flex-direction: column;
       position: relative;
-      background-image: url(data:image/svg+xml;base64,${
-        parsedReq.type == "ORG" ? ogBgImage : bgImage
-      });
+      background-image: url(data:image/svg+xml;base64,${parsedReq.type == 'ORG' ? ogBgImage : bgImage});
       background-position:center;
       background-repeat: no-repeat;
       background-size: 100% 100%;
@@ -195,32 +181,21 @@ export function getHtml(parsedReq: OgRequest) {
 }
 
 function getImage(parsedReq: OgRequest) {
-  const {
-    displayName,
-    displayNameType,
-    title,
-    organization,
-    avatar,
-    avatarType,
-    type,
-    isVerified,
-  } = parsedReq;
+  const verifiedIcon = readFileSync(`${__dirname}/../_assets/og/verified-icon.svg`).toString('base64');
+  const { displayName, displayNameType, title, organization, avatar, avatarType, type, isVerified } = parsedReq;
   let displayNameEle;
-  if (type == "PERSONAL") {
-    if (displayNameType == "ENS") {
-      displayNameEle = `<div class="display-name">${displayName.slice(
-        0,
-        -4
-      )}<span>.eth</span></div>`;
+  if (type == 'PERSONAL') {
+    if (displayNameType == 'ENS') {
+      displayNameEle = `<div class="display-name">${displayName.slice(0, -4)}<span>.eth</span></div>`;
     } else {
       displayNameEle = `<div class="display-name">${displayName}</div>`;
     }
     const avatarEle =
-      avatarType == "GENERAL"
+      avatarType == 'GENERAL'
         ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
         : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
     const titleELe = `<div class="title">${title}${
-      organization ? "<span class='at'>at</span>" + organization : ""
+      organization ? "<span class='at'>at</span>" + organization : ''
     }</div>`;
     return `<div class="wrapper">
       <div class="bg"></div>
@@ -234,9 +209,7 @@ function getImage(parsedReq: OgRequest) {
   } else {
     const avatarEle = `<div class="avatar org"><img src="${avatar}" alt=""/></div>`;
     displayNameEle = `<div class="display-name org">${displayName} ${
-      isVerified
-        ? `<img src="data:image/svg+xml;base64,${verifiedIcon}" alt="">`
-        : ""
+      isVerified ? `<img src="data:image/svg+xml;base64,${verifiedIcon}" alt="">` : ''
     }</div>`;
 
     return `<div class="wrapper">

@@ -1,21 +1,21 @@
 import { readFileSync } from 'fs';
-import { marked } from 'marked';
-import { sanitizeHtml } from '../_lib/sanitizer';
+// import { marked } from 'marked';
+// import { sanitizeHtml } from '../_lib/sanitizer';
 import { PosterRequest, PosterType, TextColors } from '../_lib/types';
 import { getPosterBaseCss } from '../_lib/getBaseCss';
-import placeIcon from '../assets/poster/icons/place';
-import giftIcon from '../assets/poster/icons/gift';
-import calendarIcon from '../assets/poster/icons/calendar';
-import { format } from 'date-fns';
+import placeIcon from '../_assets/poster/icons/place';
+import giftIcon from '../_assets/poster/icons/gift';
+import calendarIcon from '../_assets/poster/icons/calendar';
+import format from 'date-fns/format';
 import { BG_TYPES } from '../_lib/constants';
-import verifiedIcon from '../assets/poster/icons/verified';
+import verifiedIcon from '../_assets/poster/icons/verified';
 import { getColor, getContrastColor } from '../_lib/utils';
-import { badgeSmall } from '../components/badgePlaceHolder';
-const twemoji = require('twemoji');
+import { badgeSmall } from '../_components/badgePlaceHolder';
+// const twemoji = require('twemoji');
 
-const twOptions = { folder: 'svg', ext: '.svg' };
+// const twOptions = { folder: 'svg', ext: '.svg' };
 // TODO：emoji support
-const emojify = (text: string) => twemoji.parse(text, twOptions);
+// const emojify = (text: string) => twemoji.parse(text, twOptions);
 
 function getHostCss(bgType: number, bgNumber: number) {
   return `.host{
@@ -127,7 +127,7 @@ function getBigSpeakersCss(bgType: number, bgNumber: number) {
 function getCss(req: PosterRequest) {
   const { bgType, bgNumber, posterType } = req;
   function getWrapperCss(bgType: number, bgNumber: number) {
-    const bgImage = readFileSync(`${__dirname}/../assets/poster/${BG_TYPES[bgType][bgNumber].bg}`).toString('base64');
+    const bgImage = readFileSync(`${__dirname}/../_assets/poster/${BG_TYPES[bgType][bgNumber].bg}`).toString('base64');
     return `.wrapper{
               width:1000px;
               height:500px;
@@ -289,6 +289,8 @@ function getStandardImage(req: getImageType) {
   const orgEle = `<div class="org flex">
                     <img src='${orgLogo}' alt='org-logo'/>
                     <div class="org-name">${orgName}</div>
+                    ${verifiedIcon(color as TextColors)}
+                    <div class='host'>Host</div>
                   </div>`;
   const speakersEle = `<div class="speakers flex">${speakers
     .map(
