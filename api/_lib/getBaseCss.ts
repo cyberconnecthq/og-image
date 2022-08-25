@@ -56,7 +56,7 @@ export default function getBaseCss() {
 }
 export function getPosterBaseCss() {
   return `
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
   html,body {
     margin:0;padding:0;
     box-sizing:border-box;
