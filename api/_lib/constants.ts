@@ -30,11 +30,11 @@ export const BG_TYPES = [
     { bg: 'bg0-3.jpg', textColor: 'white' },
   ],
   [
-    { bg: 'bg1-0.jpg', textColor: 'blcak' },
-    { bg: 'bg1-1.jpg', textColor: 'blcak' },
-    { bg: 'bg1-2.jpg', textColor: 'blcak' },
-    { bg: 'bg1-3.jpg', textColor: 'blcak' },
-    { bg: 'bg1-4.jpg', textColor: 'blcak' },
+    { bg: 'bg1-0.jpg', textColor: 'black' },
+    { bg: 'bg1-1.jpg', textColor: 'black' },
+    { bg: 'bg1-2.jpg', textColor: 'black' },
+    { bg: 'bg1-3.jpg', textColor: 'black' },
+    { bg: 'bg1-4.jpg', textColor: 'black' },
   ],
   [
     { bg: 'bg2-0.jpg', textColor: 'white' },
@@ -53,6 +53,5 @@ export const BG_TYPES = [
     { bg: 'bg4-1.jpg', textColor: 'black' },
     { bg: 'bg4-2.jpg', textColor: 'black' },
     { bg: 'bg4-3.jpg', textColor: 'black' },
-    { bg: 'bg4-4.jpg', textColor: 'black' },
   ],
 ];
