@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { ParsedRequest } from "./types";
+import { OgRequest } from "./types";
 import getBaseCss from "./getBaseCss";
 import QRCode from "qrcode";
 
@@ -133,7 +133,7 @@ function getCss() {
   );
 }
 
-export async function getDownloadImage(parsedReq: ParsedRequest) {
+export async function getDownloadImage(parsedReq: OgRequest) {
   const imgStr = await getImage(parsedReq);
   return `<!DOCTYPE html>
 <html>
@@ -148,7 +148,7 @@ export async function getDownloadImage(parsedReq: ParsedRequest) {
 </html>`;
 }
 
-async function getImage(parsedReq: ParsedRequest) {
+async function getImage(parsedReq: OgRequest) {
   const {
     displayName,
     displayNameType,
@@ -159,6 +159,7 @@ async function getImage(parsedReq: ParsedRequest) {
     handle,
     isVerified,
   } = parsedReq;
+
   let displayNameEle;
 
   if (displayNameType == "ENS") {

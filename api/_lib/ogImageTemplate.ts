@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { marked } from "marked";
 import { sanitizeHtml } from "./sanitizer";
-import { ParsedRequest } from "./types";
+import { OgRequest } from "./types";
 import getBaseCss from "./getBaseCss";
 const twemoji = require("twemoji");
 
@@ -23,7 +23,7 @@ const verifiedIcon = readFileSync(
 const dotBgImage = readFileSync(
   `${__dirname}/../assets/og/dot-bg.png`
 ).toString("base64");
-function getCss(parsedReq: ParsedRequest) {
+function getCss(parsedReq: OgRequest) {
   return (
     getBaseCss() +
     `
@@ -179,7 +179,7 @@ function getCss(parsedReq: ParsedRequest) {
   );
 }
 
-export function getHtml(parsedReq: ParsedRequest) {
+export function getHtml(parsedReq: OgRequest) {
   return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -194,7 +194,7 @@ export function getHtml(parsedReq: ParsedRequest) {
 </html>`;
 }
 
-function getImage(parsedReq: ParsedRequest) {
+function getImage(parsedReq: OgRequest) {
   const {
     displayName,
     displayNameType,

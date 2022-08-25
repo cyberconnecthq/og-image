@@ -1,3 +1,4 @@
+import { OgRequest } from "./../api/_lib/types";
 import type { ParsedRequest, Theme, FileType } from "../api/_lib/types";
 const { H, R, copee } = window as any;
 let timeout = -1;
@@ -193,7 +194,7 @@ const imageDarkOptions: DropdownOption[] = [
   },
 ];
 
-interface AppState extends ParsedRequest {
+interface AppState {
   loading: boolean;
   showToast: boolean;
   messageToast: string;
