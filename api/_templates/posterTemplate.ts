@@ -1,3 +1,4 @@
+import { getBadgePlaceHolder } from './../_components/badgePlaceHolder';
 import { readFileSync } from 'fs';
 // import { marked } from 'marked';
 // import { sanitizeHtml } from '../_lib/sanitizer';
@@ -10,7 +11,6 @@ import format from 'date-fns/format';
 import { BG_TYPES } from '../_lib/constants';
 import verifiedIcon from '../_assets/poster/icons/verified';
 import { getColor, getContrastColor } from '../_lib/utils';
-import { badgeSmall } from '../_components/badgePlaceHolder';
 // const twemoji = require('twemoji');
 
 // const twOptions = { folder: 'svg', ext: '.svg' };
@@ -20,16 +20,22 @@ import { badgeSmall } from '../_components/badgePlaceHolder';
 function getHostCss(bgType: number, bgNumber: number) {
   return `.host{
       margin-left:10px;
+      margin-top:4px;
       color:${getColor(bgType, bgNumber)};
       text-align:center;
-      width:48px;
-      height:24px;
-      border:1px solid ${getColor(bgType, bgNumber)};
+      width: 47px;
+      height: 24px;
+      line-height: 18px;
+      border:2px solid ${getColor(bgType, bgNumber)};
       border-radius:3.5px;
-      background-color:${getColor(bgType, bgNumber) == 'white' ? 'rgba(255, 255, 255, 0.5);' : 'rgba(0, 0, 0, 0.5);'}
+      font-weight:700;
+      font-size:13px;
+      zoom:0.8;
   }`;
 }
-function getEventTitleCss(bgType: number, bgNumber: number, posterType: PosterType) {
+function getEventTitleCss(bgType: number, bgNumber: number, posterType: PosterType, eventTitle: string) {
+  const titleLength = eventTitle.length;
+  console.log(titleLength);
   let sizeCss = '';
   switch (posterType) {
     case PosterType.Standard:
@@ -60,14 +66,14 @@ function getEventTitleCss(bgType: number, bgNumber: number, posterType: PosterTy
       align-items: center;
       display:flex;
       font-weight: bold;
-      font-size: 50px;
+      ${titleLength > 40 ? 'font-size:45px;' : 'font-size:50px;'}
     }`;
   }
   return `.event-title{
     ${sizeCss}
     align-items: center;
     font-weight: bold;
-    font-size: 50px;
+    ${titleLength > 40 ? 'font-size:45px;' : 'font-size:50px;'}
     line-height: 63px;
     color: ${getColor(bgType, bgNumber)};
     display: -webkit-box;
@@ -101,6 +107,7 @@ function getBigSpeakersCss(bgType: number, bgNumber: number) {
     display:block;
     width:100%;
     border-radius:7.5px;
+    object-fit:cover;
   }
   .big-speaker .name{
     width:100%;
@@ -125,7 +132,7 @@ function getBigSpeakersCss(bgType: number, bgNumber: number) {
   `;
 }
 function getCss(req: PosterRequest) {
-  const { bgType, bgNumber, posterType } = req;
+  const { bgType, bgNumber, posterType, eventTitle } = req;
   function getWrapperCss(bgType: number, bgNumber: number) {
     const bgImage = readFileSync(`${__dirname}/../_assets/poster/${BG_TYPES[bgType][bgNumber].bg}`).toString('base64');
     return `.wrapper{
@@ -138,6 +145,7 @@ function getCss(req: PosterRequest) {
               background-size: cover;
               color:${(BG_TYPES as any)[bgType][bgNumber].textColor};
               font-size: 15px;
+              position:relative;
             }
             .column{
               flex-direction:column;
@@ -163,7 +171,7 @@ function getCss(req: PosterRequest) {
     }
     ${getWrapperCss(bgType, bgNumber)}
     ${getHostCss(bgType, bgNumber)}
-    ${getEventTitleCss(bgType, bgNumber, posterType)}
+    ${getEventTitleCss(bgType, bgNumber, posterType, eventTitle)}
     .place{
       margin-top:20px;
       height:30px;
@@ -181,18 +189,29 @@ function getCss(req: PosterRequest) {
     }
     .org{
       margin-top:20px;
-    }
-    .org img{
-      border:1.5px solid ${getColor(bgType, bgNumber)};
-      border-radius:50%;
-      display:block;
-      width:23px;
-      height:23px;
-      margin-right:15px;
-      background-color:${getColor(bgType, bgNumber)};
+      align-items:center;
     }
     .org .org-name{
       margin-right:10px;
+      line-height:20px;
+      font-weight: 500;
+    }
+    .org .verify-icon{
+      margin-top:2px;
+    }
+    .org .org-logo{
+      width:25px;
+      height:25px;
+      border:2px solid ${getColor(bgType, bgNumber)};
+      border-radius:50%;
+      margin-right:15px;
+      background-color:${getColor(bgType, bgNumber)};
+    }
+    .org .org-logo img{
+      display:block;
+      border-radius:50%;
+      width:100%;
+      height:100%;
     }
     .speaker{
       margin-top:33px;
@@ -245,6 +264,7 @@ function getCss(req: PosterRequest) {
 }
 
 export function getPoster(parsedReq: PosterRequest) {
+  console.log(parsedReq);
   return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -263,82 +283,109 @@ function getImage(parsedReq: PosterRequest) {
   const { posterType, ...rest } = parsedReq;
   switch (posterType) {
     case PosterType.Standard:
-      return getStandardImage(rest);
+      return getStandardImage(parsedReq);
     case PosterType.HighlightBadge:
-      return getHighlightBadgeImage(rest);
+      return getHighlightBadgeImage(parsedReq);
     case PosterType.HighlightGuests:
-      return getHighlightGuestsImage(rest);
+      return getHighlightGuestsImage(parsedReq);
     case PosterType.Minimal:
-      return getMinimalImage(rest);
+      return getMinimalImage(parsedReq);
     default:
       throw new Error('Poster type not found');
   }
 }
-type getImageType = Omit<PosterRequest, 'posterType'>;
-function getStandardImage(req: getImageType) {
+// type getImageType = Omit<PosterRequest, 'posterType'>;F
+
+function getOrgLogo(orgLogo: string, orgName: string, color: string) {
+  return `<div class="org flex">
+  <div class="org-logo"><img src='${orgLogo}' alt='org-logo'/></div>
+  <div class="org-name">${orgName}</div>
+  ${verifiedIcon(color as TextColors)}
+  <div class='host'>Host</div>
+</div>`;
+}
+
+function getTimeEle(req: PosterRequest) {
+  const { posterType, bgType, bgNumber, time, place, raffleText } = req;
+  const color = BG_TYPES[bgType][bgNumber].textColor;
+  if (time && place) {
+    if (posterType == PosterType.Standard) {
+      return `<div class="time flex">
+              ${calendarIcon(color as TextColors)} ${format(new Date(time * 1000), 'MM.dd O - iii p')}
+              <span>|</span>
+              ${placeIcon(color as TextColors, place)} ${place.slice(0, 1).toUpperCase() + place.slice(1).toLowerCase()}
+              ${raffleText ? `<span>|</span>${giftIcon(color as TextColors)} ${raffleText}` : ''}
+            </div>`;
+    } else {
+      return `<div class="time flex">
+                  ${calendarIcon(color as TextColors)} ${format(new Date(time * 1000), 'MM.dd O - iii p')}
+                  <span>|</span>
+                  ${placeIcon(color as TextColors, place)}${
+        place.slice(0, 1).toUpperCase() + place.slice(1).toLowerCase()
+      }
+                </div>
+                <div class="time flex">${raffleText ? `${giftIcon(color as TextColors)} ${raffleText}` : ''}</div>
+                `;
+    }
+  } else {
+    return ``;
+  }
+}
+function getStandardImage(req: PosterRequest) {
   const { bgType, bgNumber, eventTitle, time, place, raffleText, orgLogo, orgName, speakers } = req;
   const color = BG_TYPES[bgType][bgNumber].textColor;
   const eventTitleEle = `<div class="event-title">${eventTitle}</div>`;
-
-  const timeEle = `<div class="time flex">
-                    ${calendarIcon(color as TextColors)} ${format(new Date(time * 1000), 'MM.dd O - iii p')}
-                    <span>|</span>
-                    ${placeIcon(color as TextColors, place)} ${place}
-                    ${raffleText ? `<span>|</span>${giftIcon(color as TextColors)} ${raffleText}` : ''}
-                  </div>`;
-  const orgEle = `<div class="org flex">
-                    <img src='${orgLogo}' alt='org-logo'/>
-                    <div class="org-name">${orgName}</div>
-                    ${verifiedIcon(color as TextColors)}
-                    <div class='host'>Host</div>
-                  </div>`;
-  const speakersEle = `<div class="speakers flex">${speakers
-    .map(
-      (s) =>
-        `<div class="speaker">
+  const badgePlaceholder = getBadgePlaceHolder(req);
+  const timeEle = getTimeEle(req);
+  const orgEle = getOrgLogo(orgLogo, orgName, color);
+  const speakersEle = `<div class="speakers flex">${
+    speakers.length > 0
+      ? speakers
+          .map(
+            (s) =>
+              `<div class="speaker">
           <div class="avatar"><img src="${s.avatar}" alt="avatar" /></div>
           <div class="name">${s.name}</div>
           <div class="title">${s.title}</div>
         </div>`,
-    )
-    .join('')}</div>`;
-  return `<div class="wrapper">
+          )
+          .join('')
+      : ``
+  }</div>`;
+  return `
+          <div class="wrapper">
+            ${badgePlaceholder}
             ${eventTitleEle}
             ${timeEle}
             ${orgEle}
             ${speakersEle}
           </div>`;
 }
-function getHighlightBadgeImage(req: getImageType) {
+function getHighlightBadgeImage(req: PosterRequest) {
   const { bgType, bgNumber, eventTitle, time, place, raffleText, orgLogo, orgName, speakers } = req;
   const color = BG_TYPES[bgType][bgNumber].textColor;
+  const badgePlaceholder = getBadgePlaceHolder(req);
   const eventTitleEle = `<div class="event-title">${eventTitle}</div>`;
 
-  const timeEle = `<div class="time flex">
-                    ${calendarIcon(color as TextColors)} ${format(new Date(time * 1000), 'MM.dd O - iii p')}
-                    <span>|</span>
-                    ${placeIcon(color as TextColors, place)} ${place}
-                  </div>
-                  <div class="time flex">${raffleText ? `${giftIcon(color as TextColors)} ${raffleText}` : ''}</div>
-                  `;
+  const timeEle = getTimeEle(req);
 
-  const orgEle = `<div class="org flex">
-                    <img src='${orgLogo}' alt='org-logo'/>
-                    <div class="org-name">${orgName}</div>
-                    ${verifiedIcon(color as TextColors)}
-                    <div class='host'>Host</div>
-                  </div>`;
-  const speakersEle = `<div class="speakers flex">${speakers
-    .map(
-      (s) =>
-        `<div class="speaker small">
+  const orgEle = getOrgLogo(orgLogo, orgName, color);
+  const speakersEle = `<div class="speakers flex">${
+    speakers.length > 0
+      ? speakers
+          .map(
+            (s) =>
+              `<div class="speaker small">
           <div class="avatar"><img src="${s.avatar}" alt="avatar" /></div>
           <div class="name">${s.name}</div>
           <div class="title">${s.title}</div>
         </div>`,
-    )
-    .join('')}</div>`;
+          )
+          .join('')
+      : ''
+  }</div>`;
   return `<div class="wrapper">
+            ${badgePlaceholder}
             ${eventTitleEle}
             ${timeEle}
             ${orgEle}
@@ -346,26 +393,15 @@ function getHighlightBadgeImage(req: getImageType) {
           </div>`;
 }
 
-function getHighlightGuestsImage(req: getImageType) {
+function getHighlightGuestsImage(req: PosterRequest) {
   const { bgType, bgNumber, eventTitle, time, place, raffleText, orgLogo, orgName, speakers } = req;
   const color = BG_TYPES[bgType][bgNumber].textColor;
-  const { css: badgePlaceHolderCss, html: badgePlaceHolderHtml } = badgeSmall(color as TextColors);
-  const eventTitleEle = `<div class="event-title" style="margin-top:30px;">${eventTitle}</div>`;
+  const badgePlaceholder = getBadgePlaceHolder(req);
+  const eventTitleEle = `<div class="event-title" style="width:100%">${eventTitle}</div>`;
 
-  const timeEle = `<div class="time flex">
-                    ${calendarIcon(color as TextColors)} ${format(new Date(time * 1000), 'MM.dd O - iii p')}
-                    <span></span>
-                    ${placeIcon(color as TextColors, place)} ${place}
-                  </div>
-                  <div class="time flex">${raffleText ? `${giftIcon(color as TextColors)} ${raffleText}` : ''}</div>
-                  `;
+  const timeEle = getTimeEle(req);
 
-  const orgEle = `<div class="org flex" style="margin-top:50px;">
-                    <img src='${orgLogo}' alt='org-logo'/>
-                    <div class="org-name">${orgName}</div>
-                    ${verifiedIcon(color as TextColors)}
-                    <div class='host'>Host</div>
-                  </div>`;
+  const orgEle = getOrgLogo(orgLogo, orgName, color);
   const speakersLength = speakers.length;
   let adoptedStyle;
   switch (speakersLength) {
@@ -374,22 +410,24 @@ function getHighlightGuestsImage(req: getImageType) {
       adoptedStyle = `width:320px;justify-content:center`;
       break;
   }
-  const speakersEle = `<div class="big-speaker-wrapper flex" style="${adoptedStyle}">${speakers
-    .map(
-      (s) =>
-        `<div class="big-speaker">
+  const speakersEle = `<div class="big-speaker-wrapper flex" style="${adoptedStyle}">${
+    speakers.length > 0
+      ? speakers
+          .map(
+            (s) =>
+              `<div class="big-speaker">
           <div class="avatar"><img src="${s.avatar}" alt="avatar" /></div>
           <div class="name">${s.name}</div>
           <div class="title">${s.title}</div>
         </div>`,
-    )
-    .join('')}</div>`;
-  return `<style>
-            ${badgePlaceHolderCss}
-          </style>
+          )
+          .join('')
+      : ``
+  }</div>`;
+  return `
           <div class="wrapper flex">
-            <div class="left">
-              ${badgePlaceHolderHtml}
+            <div class="left" style="${speakersLength < 5 ? 'width:500px;' : ''}">
+              ${badgePlaceholder}
               ${eventTitleEle}
               ${timeEle}
               ${orgEle}
@@ -399,26 +437,16 @@ function getHighlightGuestsImage(req: getImageType) {
             </div>
           </div>`;
 }
-function getMinimalImage(req: getImageType) {
+function getMinimalImage(req: PosterRequest) {
   const { bgType, bgNumber, eventTitle, time, place, raffleText, orgLogo, orgName } = req;
   const color = BG_TYPES[bgType][bgNumber].textColor;
   const eventTitleEle = `<div class="event-title">${eventTitle}</div>`;
+  const badgePlaceholder = getBadgePlaceHolder(req);
+  const timeEle = getTimeEle(req);
 
-  const timeEle = `<div class="time flex">
-                    ${calendarIcon(color as TextColors)} ${format(new Date(time * 1000), 'MM.dd O - iii p')}
-                    <span>|</span>
-                    ${placeIcon(color as TextColors, place)} ${place}
-                  </div>
-                  <div class="time flex">${raffleText ? `${giftIcon(color as TextColors)} ${raffleText}` : ''}</div>
-                  `;
-
-  const orgEle = `<div class="org flex" style="zoom:1.2">
-                    <img src='${orgLogo}' alt='org-logo'/>
-                    <div class="org-name">${orgName}</div>
-                    ${verifiedIcon(color as TextColors)}
-                    <div class='host'>Host</div>
-                  </div>`;
+  const orgEle = getOrgLogo(orgLogo, orgName, color);
   return `<div class="wrapper flex minimal" style="align-items:center">
+            ${badgePlaceholder}
             <div class="left" style="height:100%;">
               ${orgEle}
               ${eventTitleEle}

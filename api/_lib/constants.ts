@@ -16,9 +16,9 @@ export const imgSize = {
     ratio: 2,
   },
   badge: {
-    width: 600,
-    height: 600,
-    ratio: 1,
+    width: 400,
+    height: 400,
+    ratio: 2,
   },
 };
 
@@ -53,5 +53,6 @@ export const BG_TYPES = [
     { bg: 'bg4-1.jpg', textColor: 'black' },
     { bg: 'bg4-2.jpg', textColor: 'black' },
     { bg: 'bg4-3.jpg', textColor: 'black' },
+    { bg: 'bg4-4.jpg', textColor: 'black' },
   ],
 ];

@@ -1,24 +1,13 @@
 const calendar = (color: 'white' | 'black' = 'white') => {
-  return `<svg width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M7.33569 1.04565V4.48962" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M4.97653 14.1731H9.36064" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M4.97653 11.3413H14.037" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M15.1557 1.04565V4.48962" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M1.46997 7.93262H21.0225" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <mask id="path-6-inside-1_181_2" fill="white">
-  <rect x="0.00790405" y="1.81787" width="22.5051" height="16.7313" rx="1.26282"/>
-  </mask>
-  <rect x="0.00790405" y="1.81787" width="22.5051" height="16.7313" rx="1.26282" stroke="${color}" stroke-width="3.05058" mask="url(#path-6-inside-1_181_2)"/>
-  <path d="M7.33575 1.04565V4.48962" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M4.97665 14.1733H9.36076" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M4.97665 11.3413H14.0371" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M15.1557 1.04565V4.48962" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M1.46997 7.93262H21.0225" stroke="${color}" stroke-width="1.52529" stroke-linecap="round" stroke-linejoin="round"/>
-  <mask id="path-12-inside-2_181_2" fill="white">
-  <rect x="0.00790405" y="1.81787" width="22.5051" height="16.7313" rx="1.26282"/>
-  </mask>
-  <rect x="0.00790405" y="1.81787" width="22.5051" height="16.7313" rx="1.26282" stroke="${color}" stroke-width="3.05058" mask="url(#path-12-inside-2_181_2)"/>
+  return `<svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M8.50956 0.958252C8.95295 0.958252 9.31239 1.32458 9.31239 1.77648V5.31831C9.31239 5.77021 8.95295 6.13654 8.50956 6.13654C8.06617 6.13654 7.70673 5.77021 7.70673 5.31831V1.77648C7.70673 1.32458 8.06617 0.958252 8.50956 0.958252Z" fill="${color}"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.61139 15.277C5.61139 14.8251 5.97069 14.4588 6.41391 14.4588H10.3085C10.7517 14.4588 11.111 14.8251 11.111 15.277C11.111 15.7289 10.7517 16.0952 10.3085 16.0952H6.41391C5.97069 16.0952 5.61139 15.7289 5.61139 15.277Z" fill="${color}"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.61133 12.3651C5.61133 11.9132 5.97063 11.5469 6.41384 11.5469H14.4626C14.9058 11.5469 15.2651 11.9132 15.2651 12.3651C15.2651 12.817 14.9058 13.1833 14.4626 13.1833H6.41384C5.97063 13.1833 5.61133 12.817 5.61133 12.3651Z" fill="${color}"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M15.4568 0.958252C15.9002 0.958252 16.2596 1.32458 16.2596 1.77648V5.31831C16.2596 5.77021 15.9002 6.13654 15.4568 6.13654C15.0134 6.13654 14.654 5.77021 14.654 5.31831V1.77648C14.654 1.32458 15.0134 0.958252 15.4568 0.958252Z" fill="${color}"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M2.49591 8.85997C2.49591 8.40808 2.85521 8.04175 3.29843 8.04175H20.6676C21.1109 8.04175 21.4702 8.40808 21.4702 8.85997C21.4702 9.31186 21.1109 9.6782 20.6676 9.6782H3.29843C2.85521 9.6782 2.49591 9.31186 2.49591 8.85997Z" fill="${color}"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M19.3334 4.57779H4.65083C4.06924 4.57779 3.59776 5.02158 3.59776 5.56903V16.4556C3.59776 17.003 4.06924 17.4468 4.65083 17.4468H19.3334C19.915 17.4468 20.3864 17.003 20.3864 16.4556V5.56903C20.3864 5.02159 19.915 4.57779 19.3334 4.57779ZM4.65083 3.06641C3.18245 3.06641 1.9921 4.18687 1.9921 5.56903V16.4556C1.9921 17.8377 3.18245 18.9582 4.65083 18.9582H19.3334C20.8017 18.9582 21.9921 17.8377 21.9921 16.4556V5.56903C21.9921 4.18687 20.8017 3.06641 19.3334 3.06641H4.65083Z" fill="${color}"/>
   </svg>
+  
   `;
 };
 export default calendar;

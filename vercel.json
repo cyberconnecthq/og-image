@@ -3,6 +3,7 @@
     { "source": "/", "destination": "/api/index" },
     { "source": "/og.png", "destination": "/api/index" },
     { "source": "/download.png", "destination": "/api/index" },
-    { "source": "/poster", "destination": "/api/poster" }
+    { "source": "/poster", "destination": "/api/poster" },
+    { "source": "/badge", "destination": "/api/badge" }
   ]
 }

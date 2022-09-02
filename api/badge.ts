@@ -2,22 +2,22 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { parseRequest } from './_lib/parser';
 import { getScreenshot } from './_lib/chromium';
 import { parse } from 'url';
-import { getPoster } from './_templates/posterTemplate';
-import { FileType, ImgType, PosterRequest } from './_lib/types';
+import { getBadge } from './_templates/badgeTemplate';
+import { FileType, ImgType, BadgeRequest } from './_lib/types';
 
 const isDev = !process.env.IS_PROD;
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   try {
-    const { pathname, query } = parse(req.url || '/', true);
-    const { isHtmlDebug, isDownload, isBadgePreview } = query;
+    const { query } = parse(req.url || '/', true);
+    const { isHtmlDebug, isDownload } = query;
     let html,
       imageType: ImgType,
       fileType: FileType = 'png';
-    imageType = 'poster';
+    imageType = 'badge';
     fileType = 'jpeg';
-    const parsedReq = parseRequest('poster', req);
-    html = await getPoster(parsedReq as PosterRequest);
+    const parsedReq = parseRequest('badge', req);
+    html = await getBadge(parsedReq as BadgeRequest);
 
     if (isHtmlDebug) {
       res.setHeader('Content-Type', 'text/html');
@@ -26,10 +26,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
     const file = await getScreenshot(html, fileType, isDev, imageType);
     res.statusCode = 200;
-    res.setHeader('Content-Type', `image/png`);
+    res.setHeader('Content-Type', `image/${fileType}`);
     res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);
     if (isDownload) {
-      res.setHeader('Content-Disposition', ' attachment; filename="Link3_event_poster.jpg"');
+      res.setHeader('Content-Disposition', ' attachment; filename="Link3_Badge.png"');
     }
     res.end(file);
   } catch (e) {

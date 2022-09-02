@@ -36,11 +36,18 @@ export type PosterRequest = {
   orgLogo: string;
   orgName: string;
   speakers: Speakers[];
+  isBadgePreview?: boolean;
 };
 
 export type BadgeRequest = {
-  bgType: number;
-  // imgType: "badge";
+  bg: number;
+  shape: number;
+  maskType: number;
+  textStyle: number;
+  text: string;
+  logoUrl: string;
+  bgUrl?: string;
+  textColor: TextColors;
 };
 
 export type ParsedRequest = OgRequest | PosterRequest | BadgeRequest;
