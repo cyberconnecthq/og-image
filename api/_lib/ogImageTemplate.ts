@@ -10,7 +10,7 @@ const emojify = (text: string) => twemoji.parse(text, twOptions);
 
 function getCss(parsedReq: OgRequest) {
   const bgImage = readFileSync(`${__dirname}/../_assets/og/og-card-bg.svg`).toString('base64');
-  const ogBgImage = readFileSync(`${__dirname}/../_assets/og/og-card-org-bg.svg`).toString('base64');
+  const orgBgImage = readFileSync(`${__dirname}/../_assets/og/og-card-org-bg.svg`).toString('base64');
   const dotBgImage = readFileSync(`${__dirname}/../_assets/og/dot-bg.png`).toString('base64');
   return (
     getBaseCss() +
@@ -44,6 +44,15 @@ function getCss(parsedReq: OgRequest) {
       filter:none;
       -webkit-filter:none;
     }
+    .bg.org-bg img {
+      display:block;
+      filter:blur(20px);
+      width:140%;
+      height:140%;
+      position:absolute;
+      top:-20%;
+      left:-20%;
+    }
     .dot-bg {
       width: 100%;
       height: 100%;
@@ -63,11 +72,14 @@ function getCss(parsedReq: OgRequest) {
       display: flex;
       flex-direction: column;
       position: relative;
-      background-image: url(data:image/svg+xml;base64,${parsedReq.type == 'ORG' ? ogBgImage : bgImage});
+      background-image: url(data:image/svg+xml;base64,${parsedReq.type == 'ORG' ? orgBgImage : bgImage});
       background-position:center;
       background-repeat: no-repeat;
       background-size: 100% 100%;
       padding:40px;
+    }
+    .card-wrapper.org{
+      padding:60px;
     }
     .avatar{
       position:relative;
@@ -112,8 +124,6 @@ function getCss(parsedReq: OgRequest) {
     .avatar.org{
       width: 60px;
       height: 60px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding:6px;
       border-radius:100px;
       display:flex;
       align-items:center;
@@ -136,10 +146,11 @@ function getCss(parsedReq: OgRequest) {
       color: rgba(255, 255, 255, 0.3);
     }
     .display-name.org{
-      margin-top: 37px;
+      margin-top: 27px;
       display: flex;
       align-items: center;
       gap: 10px;
+      color:black;
     }
     .display-name.org img{
       display:block;
@@ -213,9 +224,9 @@ function getImage(parsedReq: OgRequest) {
     }</div>`;
 
     return `<div class="wrapper">
-    <div class="bg org-bg"></div>
+    <div class="bg org-bg"><img src="${avatar}" alt=""/></div>
     <div class="dot-bg"></div>
-    <div class="card-wrapper">
+    <div class="card-wrapper org">
       ${avatarEle}
       ${emojify(displayNameEle)}
     </div>
