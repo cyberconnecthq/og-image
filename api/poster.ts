@@ -10,7 +10,7 @@ const isDev = !process.env.IS_PROD;
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   try {
     const { pathname, query } = parse(req.url || '/', true);
-    const { isHtmlDebug, isDownload, isBadgePreview } = query;
+    const { isHtmlDebug, isDownload } = query;
     let html,
       imageType: ImgType,
       fileType: FileType = 'png';

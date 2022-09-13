@@ -3,7 +3,7 @@ import { getColor } from '../_lib/utils';
 
 export const getBadgePlaceHolder = (req: PosterRequest) => {
   const color = getColor(req.bgType, req.bgNumber);
-  if (req.isBadgePreview) {
+  if (req.isBadgePreview && !req.badgeUrl) {
     if (req.posterType == PosterType.HighlightBadge) {
       return `<svg width="340" height="429" viewBox="0 0 340 429" fill="none" xmlns="http://www.w3.org/2000/svg" class="badge-placeholder" style="position:absolute;top:35px;right:35px;">
     <g opacity="0.5">
@@ -24,8 +24,8 @@ export const getBadgePlaceHolder = (req: PosterRequest) => {
     } else {
       return `<svg width="258" height="139" viewBox="0 0 258 139" fill="none" xmlns="http://www.w3.org/2000/svg" class"badge-placeholder" ${
         req.posterType == PosterType.HighlightGuests
-          ? 'position:absolute;left:0px;'
-          : 'style="position:absolute;top:35px;right: 35px;'
+          ? 'style="position:relative;left:-16px;"'
+          : 'style="position:absolute;top:35px;right: 35px;"'
       }">
     <g filter="url(#filter0_d_388_42)">
     <g opacity="0.5">

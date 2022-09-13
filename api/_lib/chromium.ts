@@ -14,13 +14,7 @@ async function getPage(isDev: boolean) {
   return _page;
 }
 
-export async function getScreenshot(
-  html: string,
-  type: FileType,
-  isDev: boolean,
-  imageType: ImgType = 'og',
-  isBadgePreview: boolean = false,
-) {
+export async function getScreenshot(html: string, type: FileType, isDev: boolean, imageType: ImgType = 'og') {
   const page = await getPage(isDev);
   await page.setViewport({
     width: imgSize[imageType].width,

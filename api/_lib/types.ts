@@ -37,6 +37,8 @@ export type PosterRequest = {
   orgName: string;
   speakers: Speakers[];
   isBadgePreview?: boolean;
+  badgeUrl?: string;
+  isDiscord?: boolean;
 };
 
 export type BadgeRequest = {

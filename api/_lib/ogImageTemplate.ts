@@ -78,9 +78,6 @@ function getCss(parsedReq: OgRequest) {
       background-size: 100% 100%;
       padding:40px;
     }
-    .card-wrapper.org{
-      padding:60px;
-    }
     .avatar{
       position:relative;
       width:74px;
@@ -146,11 +143,13 @@ function getCss(parsedReq: OgRequest) {
       color: rgba(255, 255, 255, 0.3);
     }
     .display-name.org{
-      margin-top: 27px;
+      margin-top: 45px;
       display: flex;
       align-items: center;
       gap: 10px;
       color:black;
+      font-weight: 700;
+      font-size: 26px;
     }
     .display-name.org img{
       display:block;
@@ -226,7 +225,7 @@ function getImage(parsedReq: OgRequest) {
     return `<div class="wrapper">
     <div class="bg org-bg"><img src="${avatar}" alt=""/></div>
     <div class="dot-bg"></div>
-    <div class="card-wrapper org">
+    <div class="card-wrapper" style="filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));">
       ${avatarEle}
       ${emojify(displayNameEle)}
     </div>

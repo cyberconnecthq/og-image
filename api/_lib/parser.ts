@@ -67,20 +67,23 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
       orgName: getString(query.orgName),
       speakers: query.speakers ? JSON.parse(query.speakers as string).slice(0, 6) : [],
       isBadgePreview: getBoolean(query.isBadgePreview),
+      badgeUrl: getString(query.badgeUrl),
+      isDiscord: getBoolean(query.isDiscord),
     };
-  } else if (imgType == 'badge') {
-    parsedRequest = {
-      bg: getNumber(query.bg),
-      shape: getNumber(query.shape),
-      maskType: getNumber(query.maskType),
-      textStyle: getNumber(query.textStyle),
-      text: getString(query.text),
-      logoUrl: getString(query.logoUrl),
-      bgUrl: getString(query.bgUrl),
-      textColor: getString(query.textColor),
-    };
-    // console.log(parsedRequest);
   }
+  // else if (imgType == 'badge') {
+  //   parsedRequest = {
+  //     bg: getNumber(query.bg),
+  //     shape: getNumber(query.shape),
+  //     maskType: getNumber(query.maskType),
+  //     textStyle: getNumber(query.textStyle),
+  //     text: getString(query.text),
+  //     logoUrl: getString(query.logoUrl),
+  //     bgUrl: getString(query.bgUrl),
+  //     textColor: getString(query.textColor),
+  //   };
+  //   // console.log(parsedRequest);
+  // }
   // @ts-ignore
   return parsedRequest;
 }
