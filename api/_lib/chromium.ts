@@ -1,6 +1,7 @@
-import core from "puppeteer-core";
-import { getOptions } from "./options";
-import { FileType } from "./types";
+import core from 'puppeteer-core';
+import { getOptions } from './options';
+import { FileType, ImgType } from './types';
+import { imgSize } from './constants';
 let _page: core.Page | null;
 
 async function getPage(isDev: boolean) {
@@ -13,16 +14,13 @@ async function getPage(isDev: boolean) {
   return _page;
 }
 
-export async function getScreenshot(
-  html: string,
-  type: FileType,
-  isDev: boolean,
-  imageType: "og" | "download" = "og"
-) {
+export async function getScreenshot(html: string, type: FileType, isDev: boolean, imageType: ImgType = 'og') {
   const page = await getPage(isDev);
-  const width = imageType === "og" ? 540 : 345;
-  const height = imageType === "og" ? 380 : 553;
-  await page.setViewport({ width, height, deviceScaleFactor: 2 });
+  await page.setViewport({
+    width: imgSize[imageType].width,
+    height: imgSize[imageType].height,
+    deviceScaleFactor: imgSize[imageType].ratio,
+  });
   await page.setContent(html);
   const file = await page.screenshot({ type, omitBackground: true });
   return file;
