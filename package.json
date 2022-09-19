@@ -9,7 +9,7 @@
     "marked": "4.0.10",
     "puppeteer-core": "13.1.2",
     "qrcode": "1.5.1",
-    "twemoji": "13.0.1"
+    "twemoji": "14.0.2"
   },
   "devDependencies": {
     "@types/marked": "4.0.1",

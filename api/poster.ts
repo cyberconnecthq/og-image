@@ -10,7 +10,7 @@ const isDev = !process.env.IS_PROD;
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   try {
     const { pathname, query } = parse(req.url || '/', true);
-    const { isHtmlDebug, isDownload } = query;
+    const { isHtmlDebug, isDownload, isDiscord } = query;
     let html,
       imageType: ImgType,
       fileType: FileType = 'png';
@@ -24,7 +24,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       res.end(html);
       return;
     }
-    const file = await getScreenshot(html, fileType, isDev, imageType);
+    const file = await getScreenshot(html, fileType, isDev, imageType, Boolean(isDiscord));
     res.statusCode = 200;
     res.setHeader('Content-Type', `image/png`);
     res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);

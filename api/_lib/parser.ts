@@ -69,6 +69,7 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
       isBadgePreview: getBoolean(query.isBadgePreview),
       badgeUrl: getString(query.badgeUrl),
       isDiscord: getBoolean(query.isDiscord),
+      timezone: getString(query.timezone),
     };
   }
   // else if (imgType == 'badge') {

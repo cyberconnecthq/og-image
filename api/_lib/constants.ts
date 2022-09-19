@@ -16,9 +16,9 @@ export const imgSize = {
     ratio: 2,
   },
   discord: {
-    width: 1200,
+    width: 1250,
     height: 500,
-    ratio: 2,
+    ratio: 1.28,
   },
   badge: {
     width: 400,

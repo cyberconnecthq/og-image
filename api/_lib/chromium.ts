@@ -14,12 +14,19 @@ async function getPage(isDev: boolean) {
   return _page;
 }
 
-export async function getScreenshot(html: string, type: FileType, isDev: boolean, imageType: ImgType = 'og') {
+export async function getScreenshot(
+  html: string,
+  type: FileType,
+  isDev: boolean,
+  imageType: ImgType = 'og',
+  isDiscord = false,
+) {
   const page = await getPage(isDev);
+  const _imageType = isDiscord ? 'discord' : imageType;
   await page.setViewport({
-    width: imgSize[imageType].width,
-    height: imgSize[imageType].height,
-    deviceScaleFactor: imgSize[imageType].ratio,
+    width: imgSize[_imageType].width,
+    height: imgSize[_imageType].height,
+    deviceScaleFactor: imgSize[_imageType].ratio,
   });
   await page.setContent(html);
   const file = await page.screenshot({ type, omitBackground: true });

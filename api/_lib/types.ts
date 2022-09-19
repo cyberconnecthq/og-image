@@ -1,6 +1,6 @@
 export type FileType = 'png' | 'jpeg';
 export type Theme = 'light' | 'dark';
-export type ImgType = 'og' | 'download' | 'poster' | 'badge';
+export type ImgType = 'og' | 'download' | 'poster' | 'badge' | 'discord';
 
 export type OgRequest = {
   displayName: string;
@@ -39,6 +39,7 @@ export type PosterRequest = {
   isBadgePreview?: boolean;
   badgeUrl?: string;
   isDiscord?: boolean;
+  timezone?: string;
 };
 
 export type BadgeRequest = {

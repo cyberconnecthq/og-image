@@ -13,11 +13,12 @@ import verifiedIcon from '../_assets/poster/icons/verified';
 import { getColor, getContrastColor } from '../_lib/utils';
 import { bigSpeakerPlaceholder, standardSpeakersPlaceHolder } from '../_assets/poster/speakerPlaceHolder';
 import getBadgeImage from '../_components/badgeImage';
-// const twemoji = require('twemoji');
 
-// const twOptions = { folder: 'svg', ext: '.svg' };
+const twemoji = require('twemoji');
+const twOptions = { folder: 'svg', ext: '.svg' };
+
 // TODO：emoji support
-// const emojify = (text: string) => twemoji.parse(text, twOptions);
+const emojify = (text: string) => twemoji.parse(text, twOptions);
 
 function getHostCss(bgType: number, bgNumber: number) {
   return `.host{
@@ -27,7 +28,7 @@ function getHostCss(bgType: number, bgNumber: number) {
       text-align:center;
       width: 47px;
       height: 24px;
-      line-height: 18px;
+      line-height: 20px;
       border:2px solid ${getColor(bgType, bgNumber)};
       border-radius:3.5px;
       font-weight:700;
@@ -37,7 +38,6 @@ function getHostCss(bgType: number, bgNumber: number) {
 }
 function getEventTitleCss(bgType: number, bgNumber: number, posterType: PosterType, eventTitle: string) {
   const titleLength = eventTitle.length;
-  console.log(titleLength);
   let sizeCss = '';
   switch (posterType) {
     case PosterType.Standard:
@@ -61,6 +61,7 @@ function getEventTitleCss(bgType: number, bgNumber: number, posterType: PosterTy
   }
   if (posterType == PosterType.Minimal) {
     return `.event-title{
+      display:flex;
       margin-top: 34px;
       width:465px;
       height:280px;
@@ -73,6 +74,7 @@ function getEventTitleCss(bgType: number, bgNumber: number, posterType: PosterTy
   }
   return `.event-title{
     ${sizeCss}
+    display:flex;
     align-items: center;
     font-weight: bold;
     ${titleLength > 40 ? 'font-size:45px;' : 'font-size:50px;'}
@@ -142,6 +144,11 @@ function getBigSpeakersCss(bgType: number, bgNumber: number) {
     align-items:center;
     justify-content:center;
   }
+  .big-speaker .name img, .big-speaker .title img{
+    display:inline;
+    height:20px;
+    width:20px;
+  }
   `;
 }
 function getCss(req: PosterRequest) {
@@ -207,6 +214,10 @@ function getCss(req: PosterRequest) {
     ${getWrapperCss(bgType, bgNumber)}
     ${getHostCss(bgType, bgNumber)}
     ${getEventTitleCss(bgType, bgNumber, posterType, eventTitle)}
+    .event-title img{
+      display:inline-block;
+      height:30%;
+    }
     .place{
       margin-top:20px;
       height:30px;
@@ -279,12 +290,20 @@ function getCss(req: PosterRequest) {
       padding:0 5px;
     }
     .speaker .title{
+      display:flex;
+      align-items:center;
+      justify-content:center;
       opacity:0.5;
       font-weight:400;
       margin-top:10px;
       text-align:center;
       overflow:hidden;
       text-overflow:ellipsis;
+    }
+    .speaker .name img, .speaker .title img{
+      display:inline;
+      height:20px;
+      width:20px;
     }
     .speaker.small{
       zoom:0.6;
@@ -307,10 +326,14 @@ function getCss(req: PosterRequest) {
 }
 
 export function getPoster(parsedReq: PosterRequest) {
-  console.log(parsedReq);
+  // console.log(parsedReq);
   return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
+    <head>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
     <title>Generated Image</title>
 
     <style>
@@ -325,6 +348,7 @@ export function getPoster(parsedReq: PosterRequest) {
 }
 
 function getImage(parsedReq: PosterRequest) {
+  console.log(parsedReq);
   const { posterType, ...rest } = parsedReq;
   if (!parsedReq.eventTitle) {
     parsedReq.eventTitle = 'Event Title';
@@ -354,19 +378,28 @@ function getOrgLogo(orgLogo: string, orgName: string, color: string) {
 }
 
 function getTimeEle(req: PosterRequest) {
-  const { posterType, bgType, bgNumber, time, place, raffleText } = req;
+  const { posterType, bgType, bgNumber, time, place, raffleText, timezone } = req;
   const color = BG_TYPES[bgType][bgNumber].textColor;
+  const _timezone = timezone || '0';
   if (time && place) {
+    const formattedData = format(
+      new Date(time * 1000 + parseFloat(_timezone) * 1000 * 3600),
+      'MMM dd E, p, O',
+    ).toString();
+    const offset = formattedData.split(',')[2].split('GMT')[1];
+
+    const finalTime = formattedData.replace(offset, timezone || '+0').replace('GMT', 'UTC');
+
     if (posterType == PosterType.Standard) {
       return `<div class="time flex">
-              ${calendarIcon(color as TextColors)} ${format(new Date(time * 1000), 'MMM dd E, p, O')}
+              ${calendarIcon(color as TextColors)} ${finalTime}
               <span>|</span>
               ${placeIcon(color as TextColors, place)} ${place.slice(0, 1).toUpperCase() + place.slice(1).toLowerCase()}
               ${raffleText ? `<span>|</span>${giftIcon(color as TextColors)} ${raffleText}` : ''}
             </div>`;
     } else {
       return `<div class="time flex">
-                  ${calendarIcon(color as TextColors)} ${format(new Date(time * 1000), 'MMM dd E, p, O')}
+                  ${calendarIcon(color as TextColors)} ${finalTime}
                   <span>|</span>
                   ${placeIcon(color as TextColors, place)}${
         place.slice(0, 1).toUpperCase() + place.slice(1).toLowerCase()
@@ -422,8 +455,8 @@ function getStandardImage(req: PosterRequest) {
             (s) =>
               `<div class="speaker">
           <div class="avatar"><img src="${s.avatar}" alt="avatar" /></div>
-          <div class="name">${s.name}</div>
-          <div class="title">${s.title}</div>
+          <div class="name">${emojify(s.name)}</div>
+          <div class="title">${emojify(s.title)}</div>
         </div>`,
           )
           .join('')
@@ -456,8 +489,8 @@ function getHighlightBadgeImage(req: PosterRequest) {
             (s) =>
               `<div class="speaker small">
           <div class="avatar"><img src="${s.avatar}" alt="avatar" /></div>
-          <div class="name">${s.name}</div>
-          <div class="title">${s.title}</div>
+          <div class="name">${emojify(s.name)}</div>
+          <div class="title">${emojify(s.title)}</div>
         </div>`,
           )
           .join('')
@@ -498,16 +531,17 @@ function getHighlightGuestsImage(req: PosterRequest) {
             (s) =>
               `<div class="big-speaker">
                 <div class="avatar"><img src="${s.avatar}" alt="avatar" /></div>
-                <div class="name">${s.name}</div>
-                <div class="title">${s.title}</div>
+                <div class="name">${emojify(s.name)}</div>
+                <div class="title">${emojify(s.title)}</div>
               </div>`,
           )
           .join('')
       : (() => {
-          return new Array(6)
-            .fill(0)
-            .map(
-              (_, i) => `<div class="big-speaker placeholder">
+          return isBadgePreview
+            ? new Array(6)
+                .fill(0)
+                .map(
+                  (_, i) => `<div class="big-speaker placeholder">
                             <div class="avatar">${
                               // @ts-ignore
                               bigSpeakerPlaceholder(color, isBadgePreview)
@@ -515,8 +549,9 @@ function getHighlightGuestsImage(req: PosterRequest) {
                             <div class="name">Speaker</div>
                             <div class="title">Title</div>
                           </div>`,
-            )
-            .join('');
+                )
+                .join('')
+            : '';
         })()
   }</div>`;
   return `
