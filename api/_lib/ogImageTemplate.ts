@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
-import { marked } from 'marked';
-import { sanitizeHtml } from './sanitizer';
+// import { marked } from 'marked';
+// import { sanitizeHtml } from './sanitizer';
 import { OgRequest } from './types';
 import getBaseCss from './getBaseCss';
 const twemoji = require('twemoji');
 
 const twOptions = { folder: 'svg', ext: '.svg' };
-const emojify = (text: string) => twemoji.parse(text, twOptions);
+const emojify = (text: string | undefined) => twemoji.parse(text, twOptions);
 
 function getCss(parsedReq: OgRequest) {
   const bgImage = readFileSync(`${__dirname}/../_assets/og/og-card-bg.svg`).toString('base64');
@@ -159,8 +159,6 @@ function getCss(parsedReq: OgRequest) {
     }
     .title{
       display:flex;
-      font-family: 'Outfit';
-      font-style: normal;
       font-weight: 400;
       font-size: 16px;
       color: rgba(255, 255, 255, 0.7);

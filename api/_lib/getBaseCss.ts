@@ -2,9 +2,13 @@ import { readFileSync } from 'fs';
 export default function getBaseCss() {
   const outfit = readFileSync(`${__dirname}/../_fonts/Outfit.woff2`).toString('base64');
   return `
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
   html,body {
     margin:0;padding:0;
-    font-family:'Outfit';
+    font-family:'Outfit', 'Noto Sans SC', 'Noto Sans JP', 'Open Sans', 'Noto Sans KR', 'Noto Color Emoji', Microsoft Yahei;
   }
   @font-face {
     font-family: 'Outfit';
