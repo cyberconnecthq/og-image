@@ -146,8 +146,8 @@ function getBigSpeakersCss(bgType: number, bgNumber: number) {
   }
   .big-speaker .name img, .big-speaker .title img{
     display:inline;
-    height:20px;
-    width:20px;
+    height:12px;
+    width:12px;
   }
   `;
 }
@@ -302,8 +302,8 @@ function getCss(req: PosterRequest) {
     }
     .speaker .name img, .speaker .title img{
       display:inline;
-      height:20px;
-      width:20px;
+      height:12px;
+      width:12px;
     }
     .speaker.small{
       zoom:0.6;
