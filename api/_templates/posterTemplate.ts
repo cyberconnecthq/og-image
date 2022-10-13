@@ -1,5 +1,5 @@
 import { getBadgePlaceHolder } from './../_components/badgePlaceHolder';
-import { readFileSync } from 'fs';
+// import { readFileSync } from 'fs';
 // import { marked } from 'marked';
 // import { sanitizeHtml } from '../_lib/sanitizer';
 import { PosterRequest, PosterType, TextColors } from '../_lib/types';
@@ -154,7 +154,7 @@ function getBigSpeakersCss(bgType: number, bgNumber: number) {
 function getCss(req: PosterRequest) {
   const { bgType, bgNumber, posterType, eventTitle, isDiscord } = req;
   function getWrapperCss(bgType: number, bgNumber: number) {
-    const bgImage = readFileSync(`${__dirname}/../_assets/poster/${BG_TYPES[bgType][bgNumber].bg}`).toString('base64');
+    // const bgImage = readFileSync(`${__dirname}/../_assets/poster/${BG_TYPES[bgType][bgNumber].bg}`).toString('base64');
     const isDiscordStyle = isDiscord
       ? `.screen-wrapper{
       width:1250px;
@@ -162,7 +162,9 @@ function getCss(req: PosterRequest) {
       display:flex;
       justify-content:center;
       align-items:center;
-      background-image:url(data:image/jpeg;base64,${bgImage});
+      background-image:url('https://image-stg.s3.us-west-2.amazonaws.com/link3/poster/${
+        BG_TYPES[bgType][bgNumber].bg
+      }');
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -182,7 +184,9 @@ function getCss(req: PosterRequest) {
         color:${(BG_TYPES as any)[bgType][bgNumber].textColor};
         font-size: 15px;
         position:relative;
-        background-image:url(data:image/jpeg;base64,${bgImage});
+        background-image:url('https://image-stg.s3.us-west-2.amazonaws.com/link3/poster/${
+          BG_TYPES[bgType][bgNumber].bg
+        }');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -381,6 +385,7 @@ function getTimeEle(req: PosterRequest) {
   const { posterType, bgType, bgNumber, time, place, raffleText, timezone } = req;
   const color = BG_TYPES[bgType][bgNumber].textColor;
   const _timezone = timezone || '0';
+  const isValidRaffleText = raffleText && raffleText.indexOf('undefined') < 0;
   if (time && place) {
     const formattedData = format(
       new Date(time * 1000 + parseFloat(_timezone) * 1000 * 3600),
@@ -395,7 +400,7 @@ function getTimeEle(req: PosterRequest) {
               ${calendarIcon(color as TextColors)} ${finalTime}
               <span>|</span>
               ${placeIcon(color as TextColors, place)} ${place.slice(0, 1).toUpperCase() + place.slice(1).toLowerCase()}
-              ${raffleText ? `<span>|</span>${giftIcon(color as TextColors)} ${raffleText}` : ''}
+              ${isValidRaffleText ? `<span>|</span>${giftIcon(color as TextColors)} ${raffleText}` : ''}
             </div>`;
     } else {
       return `<div class="time flex">
@@ -405,7 +410,9 @@ function getTimeEle(req: PosterRequest) {
         place.slice(0, 1).toUpperCase() + place.slice(1).toLowerCase()
       }
                 </div>
-                <div class="time flex">${raffleText ? `${giftIcon(color as TextColors)} ${raffleText}` : ''}</div>
+                <div class="time flex">${
+                  isValidRaffleText ? `${giftIcon(color as TextColors)} ${raffleText}` : ''
+                }</div>
                 `;
     }
   } else {
@@ -415,7 +422,7 @@ function getTimeEle(req: PosterRequest) {
                 ${calendarIcon(color as TextColors)} Time
                 <span>|</span>
                 ${defaultPlaceIcon(color as TextColors)} Venue
-                ${raffleText ? `<span>|</span>${giftIcon(color as TextColors)} ${raffleText}` : ''}
+                ${isValidRaffleText ? `<span>|</span>${giftIcon(color as TextColors)} ${raffleText}` : ''}
             </div>`;
     } else {
       return `<div class="time flex">
@@ -423,7 +430,7 @@ function getTimeEle(req: PosterRequest) {
                 <span>|</span>
                 ${defaultPlaceIcon(color as TextColors)} Venue
               </div>
-              <div class="time flex">${raffleText ? `${giftIcon(color as TextColors)} ${raffleText}` : ''}</div>
+              <div class="time flex">${isValidRaffleText ? `${giftIcon(color as TextColors)} ${raffleText}` : ''}</div>
               `;
     }
   }
@@ -454,7 +461,9 @@ function getStandardImage(req: PosterRequest) {
           .map(
             (s) =>
               `<div class="speaker">
-          <div class="avatar"><img src="${s.avatar}" alt="avatar" /></div>
+          <div class="avatar"><img src="${
+            s.avatar
+          }" alt="avatar" onerror="this.onerror=null; this.src='https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/personal/0001.png'"/></div>
           <div class="name">${emojify(s.name)}</div>
           <div class="title">${emojify(s.title)}</div>
         </div>`,
@@ -488,7 +497,9 @@ function getHighlightBadgeImage(req: PosterRequest) {
           .map(
             (s) =>
               `<div class="speaker small">
-          <div class="avatar"><img src="${s.avatar}" alt="avatar" /></div>
+          <div class="avatar"><img src="${
+            s.avatar
+          }" alt="avatar" onerror="this.onerror=null; this.src='https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/personal/0001.png'"/></div>
           <div class="name">${emojify(s.name)}</div>
           <div class="title">${emojify(s.title)}</div>
         </div>`,
@@ -530,7 +541,9 @@ function getHighlightGuestsImage(req: PosterRequest) {
           .map(
             (s) =>
               `<div class="big-speaker">
-                <div class="avatar"><img src="${s.avatar}" alt="avatar" /></div>
+                <div class="avatar"><img src="${
+                  s.avatar
+                }" alt="avatar" onerror="this.onerror=null; this.src='https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/personal/0001.png'"/></div>
                 <div class="name">${emojify(s.name)}</div>
                 <div class="title">${emojify(s.title)}</div>
               </div>`,
