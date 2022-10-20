@@ -194,7 +194,9 @@ function getImage(parsedReq: OgRequest) {
   let displayNameEle;
   if (type == 'PERSONAL') {
     if (displayNameType == 'ENS') {
-      displayNameEle = `<div class="display-name">${displayName.slice(0, -4)}<span>.eth</span></div>`;
+      displayNameEle = `<div class="display-name">${displayName.replace('.eth', '')}<span>.eth</span></div>`;
+    } else if (displayNameType == 'SID') {
+      displayNameEle = `<div class="display-name">${displayName.replace('.bnb', '')}<span>.bnb</span></div>`;
     } else {
       displayNameEle = `<div class="display-name">${displayName}</div>`;
     }
