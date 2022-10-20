@@ -4,7 +4,7 @@ export type ImgType = 'og' | 'download' | 'poster' | 'badge' | 'discord';
 
 export type OgRequest = {
   displayName: string;
-  displayNameType?: 'ENS' | 'GENERAL';
+  displayNameType?: 'ENS' | 'GENERAL' | 'SID';
   avatar: string;
   avatarType?: 'NFT' | 'GENERAL';
   title?: string;
