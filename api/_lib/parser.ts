@@ -35,7 +35,7 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
       displayName: Array.isArray(displayName) ? displayName[0] : displayName || '',
       displayNameType: Array.isArray(displayNameType)
         ? 'GENERAL'
-        : displayNameType === 'GENERAL' || displayNameType === 'ENS'
+        : displayNameType === 'GENERAL' || displayNameType === 'ENS' || displayNameType === 'SID'
         ? (displayNameType as OgRequest['displayNameType'])
         : 'GENERAL',
       title: Array.isArray(title) ? title[0] : title || '',
