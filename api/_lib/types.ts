@@ -31,7 +31,7 @@ export type PosterRequest = {
   bgNumber: number;
   eventTitle: string;
   time: number;
-  place: 'twitter' | 'discord';
+  place: Place;
   raffleText: string;
   orgLogo: string;
   orgName: string;
@@ -40,6 +40,7 @@ export type PosterRequest = {
   badgeUrl?: string;
   isDiscord?: boolean;
   timezone?: string;
+  extraPlaceInfo?: ExtraPlaceInfo;
 };
 
 export type BadgeRequest = {
@@ -56,4 +57,5 @@ export type BadgeRequest = {
 export type ParsedRequest = OgRequest | PosterRequest | BadgeRequest;
 
 export type TextColors = 'white' | 'black';
-export type Place = 'twitter' | 'discord';
+export type Place = 'twitter' | 'discord' | 'others';
+export type ExtraPlaceInfo = 'youtube' | 'binance';

@@ -1,3 +1,4 @@
+import { ExtraPlaceInfo, Place } from './../_lib/types';
 import { getBadgePlaceHolder } from './../_components/badgePlaceHolder';
 // import { readFileSync } from 'fs';
 // import { marked } from 'marked';
@@ -380,9 +381,34 @@ function getOrgLogo(orgLogo: string, orgName: string, color: string) {
   <div class='host'>Host</div>
 </div>`;
 }
-
+function getPlaceText(place: Place, extraPlaceInfo?: ExtraPlaceInfo) {
+  let str = '';
+  switch (place) {
+    case 'twitter':
+      str = 'Twitter';
+      break;
+    case 'discord':
+      str = 'Discord';
+      break;
+    case 'others':
+      switch (extraPlaceInfo) {
+        case 'youtube':
+          str = 'Youtube';
+          break;
+        case 'binance':
+          str = 'Binance Live';
+          break;
+        default:
+          str = 'Others';
+      }
+      break;
+    default:
+      str = 'Others';
+  }
+  return str;
+}
 function getTimeEle(req: PosterRequest) {
-  const { posterType, bgType, bgNumber, time, place, raffleText, timezone } = req;
+  const { posterType, bgType, bgNumber, time, place, raffleText, timezone, extraPlaceInfo } = req;
   const color = BG_TYPES[bgType][bgNumber].textColor;
   const _timezone = timezone || '0';
   const isValidRaffleText = raffleText && raffleText.indexOf('undefined') < 0;
@@ -399,16 +425,14 @@ function getTimeEle(req: PosterRequest) {
       return `<div class="time flex">
               ${calendarIcon(color as TextColors)} ${finalTime}
               <span>|</span>
-              ${placeIcon(color as TextColors, place)} ${place.slice(0, 1).toUpperCase() + place.slice(1).toLowerCase()}
+              ${placeIcon(color as TextColors, place, extraPlaceInfo)} ${getPlaceText(place, extraPlaceInfo)}
               ${isValidRaffleText ? `<span>|</span>${giftIcon(color as TextColors)} ${raffleText}` : ''}
             </div>`;
     } else {
       return `<div class="time flex">
                   ${calendarIcon(color as TextColors)} ${finalTime}
                   <span>|</span>
-                  ${placeIcon(color as TextColors, place)}${
-        place.slice(0, 1).toUpperCase() + place.slice(1).toLowerCase()
-      }
+                  ${placeIcon(color as TextColors, place, extraPlaceInfo)} ${getPlaceText(place, extraPlaceInfo)}
                 </div>
                 <div class="time flex">${
                   isValidRaffleText ? `${giftIcon(color as TextColors)} ${raffleText}` : ''
