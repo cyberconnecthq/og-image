@@ -7,6 +7,7 @@
     "chrome-aws-lambda": "10.1.0",
     "date-fns": "2.29.2",
     "marked": "4.0.10",
+    "nextjs-cors": "2.1.2",
     "puppeteer-core": "13.1.2",
     "qrcode": "1.5.1",
     "twemoji": "14.0.2"

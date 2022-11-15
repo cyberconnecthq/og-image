@@ -4,10 +4,12 @@ import { getScreenshot } from './_lib/chromium';
 import { parse } from 'url';
 import { getPoster } from './_templates/posterTemplate';
 import { FileType, ImgType, PosterRequest } from './_lib/types';
+import { corsMiddleware } from './_lib/corsMiddleware';
 
 const isDev = !process.env.IS_PROD;
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
+  await corsMiddleware(req, res);
   try {
     const { pathname, query } = parse(req.url || '/', true);
     const { isHtmlDebug, isDownload, isDiscord } = query;

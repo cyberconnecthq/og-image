@@ -202,7 +202,7 @@ function getImage(parsedReq: OgRequest) {
     }
     const avatarEle =
       avatarType == 'GENERAL'
-        ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
+        ? `<div class="avatar"><img src="${avatar}" alt="" onerror="this.onerror=null; this.src='https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/personal/0001.png'"/></div>`
         : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
     const titleELe = `<div class="title">${title}${
       organization ? "<span class='at'>at</span>" + organization : ''
@@ -217,7 +217,7 @@ function getImage(parsedReq: OgRequest) {
       </div>
     </div>`;
   } else {
-    const avatarEle = `<div class="avatar org"><img src="${avatar}" alt=""/></div>`;
+    const avatarEle = `<div class="avatar org"><img src="${avatar}" alt="" onerror="this.onerror=null; this.src='https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/Enterprise-Logo.png'"/></div>`;
     displayNameEle = `<div class="display-name org">${displayName} ${
       isVerified ? `<img src="data:image/svg+xml;base64,${verifiedIcon}" alt="">` : ''
     }</div>`;

@@ -84,6 +84,7 @@ export default function getBadgeImage(req: PosterRequest) {
       <div class="badge-image highlight-badge"><img src='${badgeUrl}' alt='badge'/><div>Web3 Status Token (WΞST)</div></div>
       `;
       break;
+    case PosterType.MoreGuests:
     case PosterType.HighlightGuests:
       dom = `
       <div class="badge-image highlight-guest"><img src='${badgeUrl}' alt='badge'/><div>Web3 Status Token (WΞST)</div></div>

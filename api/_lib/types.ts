@@ -19,6 +19,7 @@ export enum PosterType {
   HighlightBadge = 'HighlightBadge',
   HighlightGuests = 'HighlightGuests',
   Minimal = 'Minimal',
+  MoreGuests = 'MoreGuests',
 }
 export type Speakers = {
   avatar: string;

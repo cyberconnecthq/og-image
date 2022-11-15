@@ -46,10 +46,18 @@ function getEventTitleCss(bgType: number, bgNumber: number, posterType: PosterTy
       sizeCss = `height:132px;
                   max-width:600px;`;
       break;
+    case PosterType.MoreGuests:
+      sizeCss = `
+        height:186px;
+        width:400px;
+        -webkit-line-clamp: 3 !important;
+      `;
+      break;
     case PosterType.HighlightGuests:
       sizeCss = `
         height:132px;
         width:400px;
+        -webkit-line-clamp: 3 !important;
       `;
       break;
     case PosterType.Minimal:
@@ -152,6 +160,74 @@ function getBigSpeakersCss(bgType: number, bgNumber: number) {
   }
   `;
 }
+
+function getMoreSpeakersCss(bgType: number, bgNumber: number) {
+  return `
+  .more-speaker-wrapper{
+    flex-wrap: wrap;
+    justify-content: center;
+    gap:5px;
+  }
+  .more-speaker{
+    display:flex;
+    flex-direction:column;
+    width:140px;
+    height:140px;
+    overflow:hidden;
+    color:${getColor(bgType, bgNumber)};
+    text-align:center;
+    font-size:10px;
+  }
+  .more-speaker.placeholder{
+    color:${getColor(bgType, bgNumber)};
+    border:1px dashed ${getColor(bgType, bgNumber)};
+  }
+  .more-speaker.placeholder .avatar{
+    display:flex;
+    justify-content:center;
+    box-sizing:border-box;
+    padding:0 3px;
+  }
+  .more-speaker.placeholder svg{
+    width:100%;
+  }
+  .more-speaker .avatar{
+    display:flex;
+    justify-content:center;
+  }
+  .more-speaker img{
+    display:block;
+    width:82px;
+    height:82px;
+    border-radius:1000px;
+    object-fit:contain;
+  }
+  .more-speaker .name{
+    width:100%;
+    margin-top:5px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    padding:0 10px;
+  }
+  .more-speaker .title{
+    opacity:0.5;
+    width:100%;
+    padding:0 10px;
+    font-size:10px;
+    line-height:13px;
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .more-speaker .name img, .more-speaker .title img{
+    display:inline;
+    height:12px;
+    width:12px;
+  }
+  `;
+}
 function getCss(req: PosterRequest) {
   const { bgType, bgNumber, posterType, eventTitle, isDiscord } = req;
   function getWrapperCss(bgType: number, bgNumber: number) {
@@ -173,7 +249,7 @@ function getCss(req: PosterRequest) {
     .wrapper{
       width:1000px;
       height:500px;
-      padding:35px;
+      padding:${posterType == PosterType.MoreGuests ? '35px 0 35px 35px' : '35px'};
       color:${(BG_TYPES as any)[bgType][bgNumber].textColor};
       font-size: 15px;
       position:relative;
@@ -181,7 +257,7 @@ function getCss(req: PosterRequest) {
       : `.wrapper{
         width:1000px;
         height:500px;
-        padding:35px;
+        padding:${posterType == PosterType.MoreGuests ? '35px 0 35px 35px' : '35px'};
         color:${(BG_TYPES as any)[bgType][bgNumber].textColor};
         font-size: 15px;
         position:relative;
@@ -236,7 +312,7 @@ function getCss(req: PosterRequest) {
       margin-right:15px;
     }
     .time span{
-      margin:0 15px;
+      margin:0 13px;
     }
     .org{
       margin-top:20px;
@@ -327,6 +403,7 @@ function getCss(req: PosterRequest) {
       background-color:${getColor(bgType, bgNumber)};
       margin:0 30px;
     }
+    ${getMoreSpeakersCss(bgType, bgNumber)}
     `;
 }
 
@@ -358,6 +435,7 @@ function getImage(parsedReq: PosterRequest) {
   if (!parsedReq.eventTitle) {
     parsedReq.eventTitle = 'Event Title';
   }
+  console.log(posterType);
   switch (posterType) {
     case PosterType.Standard:
       return getStandardImage(parsedReq);
@@ -367,6 +445,8 @@ function getImage(parsedReq: PosterRequest) {
       return getHighlightGuestsImage(parsedReq);
     case PosterType.Minimal:
       return getMinimalImage(parsedReq);
+    case PosterType.MoreGuests:
+      return getMoreGuestsImage(parsedReq);
     default:
       throw new Error('Poster type not found');
   }
@@ -628,6 +708,71 @@ function getMinimalImage(req: PosterRequest) {
               display: flex;
               flex-direction: column;">
               ${timeEle}
+            </div>
+          </div>`;
+}
+
+function getMoreGuestsImage(req: PosterRequest) {
+  const { bgType, bgNumber, eventTitle, time, place, raffleText, orgLogo, orgName, speakers, isBadgePreview } = req;
+  const color = BG_TYPES[bgType][bgNumber].textColor;
+  const badgePlaceholder = getBadgePlaceHolder(req);
+  const eventTitleEle = `<div class="event-title" style="width:100%">${eventTitle}</div>`;
+  const badgeImage = getBadgeImage(req);
+  const timeEle = getTimeEle(req);
+
+  const orgEle = getOrgLogo(orgLogo, orgName, color);
+  const speakersLength = speakers.length;
+  let adoptedStyle;
+  switch (speakersLength) {
+    case 4:
+    case 2:
+      adoptedStyle = `width:320px;justify-content:center`;
+      break;
+  }
+  const speakersEle = `<div class="more-speaker-wrapper flex" style="${adoptedStyle}">${
+    speakers.length > 0
+      ? speakers
+          .map(
+            (s) =>
+              `<div class="more-speaker">
+                <div class="avatar"><img src="${
+                  s.avatar
+                }" alt="avatar" onerror="this.onerror=null; this.src='https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/personal/0001.png'"/></div>
+                <div class="name">${emojify(s.name)}</div>
+                <div class="title">${emojify(s.title)}</div>
+              </div>`,
+          )
+          .join('')
+      : (() => {
+          return isBadgePreview
+            ? new Array(6)
+                .fill(0)
+                .map(
+                  (_, i) => `<div class="more-speaker placeholder">
+                            <div class="avatar">${
+                              // @ts-ignore
+                              bigSpeakerPlaceholder(color, isBadgePreview)
+                            }</div>
+                            <div class="name">Speaker</div>
+                            <div class="title">Title</div>
+                          </div>`,
+                )
+                .join('')
+            : '';
+        })()
+  }</div>`;
+  return `
+          <div class="wrapper flex">
+            <div class="left" style="width:400px">
+              ${badgePlaceholder}
+              ${badgeImage}
+              ${eventTitleEle}
+              ${timeEle}
+              <style>.org{margin-top:36px;}</style>
+              ${orgEle}
+            </div>
+            <div class="right" style="width:600px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              ${speakersEle}
             </div>
           </div>`;
 }
