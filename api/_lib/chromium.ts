@@ -20,9 +20,24 @@ export async function getScreenshot(
   isDev: boolean,
   imageType: ImgType = 'og',
   isDiscord = false,
+  isThumb = false,
 ) {
   const page = await getPage(isDev);
-  const _imageType = isDiscord ? 'discord' : imageType;
+  let _imageType: ImgType;
+  switch (imageType) {
+    case 'poster':
+      if (isDiscord) {
+        _imageType = 'discord';
+      } else if (isThumb) {
+        _imageType = 'thumbnail';
+      } else {
+        _imageType = imageType;
+      }
+      break;
+    default:
+      _imageType = imageType;
+  }
+
   await page.setViewport({
     width: imgSize[_imageType].width,
     height: imgSize[_imageType].height,

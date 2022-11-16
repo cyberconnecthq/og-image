@@ -25,6 +25,11 @@ export const imgSize = {
     height: 400,
     ratio: 2,
   },
+  thumbnail: {
+    width: 1000,
+    height: 500,
+    ratio: 0.3,
+  },
 };
 
 export const BG_TYPES = [

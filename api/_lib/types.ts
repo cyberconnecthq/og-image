@@ -1,6 +1,6 @@
 export type FileType = 'png' | 'jpeg';
 export type Theme = 'light' | 'dark';
-export type ImgType = 'og' | 'download' | 'poster' | 'badge' | 'discord';
+export type ImgType = 'og' | 'download' | 'poster' | 'badge' | 'discord' | 'thumbnail';
 
 export type OgRequest = {
   displayName: string;
