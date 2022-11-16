@@ -430,12 +430,12 @@ export function getPoster(parsedReq: PosterRequest) {
 }
 
 function getImage(parsedReq: PosterRequest) {
-  console.log(parsedReq);
+  // console.log(parsedReq);
   const { posterType, ...rest } = parsedReq;
   if (!parsedReq.eventTitle) {
     parsedReq.eventTitle = 'Event Title';
   }
-  console.log(posterType);
+  // console.log(posterType);
   switch (posterType) {
     case PosterType.Standard:
       return getStandardImage(parsedReq);
