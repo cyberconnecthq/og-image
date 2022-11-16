@@ -28,7 +28,7 @@ export const imgSize = {
   thumbnail: {
     width: 1000,
     height: 500,
-    ratio: 0.3,
+    ratio: 0.5,
   },
 };
 

@@ -4,15 +4,15 @@ import { getScreenshot } from './_lib/chromium';
 import { parse } from 'url';
 import { getPoster } from './_templates/posterTemplate';
 import { FileType, ImgType, PosterRequest } from './_lib/types';
-import { corsMiddleware } from './_lib/corsMiddleware';
+// import { corsMiddleware } from './_lib/corsMiddleware';
 
 const isDev = !process.env.IS_PROD;
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
-  await corsMiddleware(req, res);
+  // await corsMiddleware(req, res);
   try {
     const { pathname, query } = parse(req.url || '/', true);
-    const { isHtmlDebug, isDownload, isDiscord } = query;
+    const { isHtmlDebug, isDownload, isDiscord, isThumb } = query;
     let html,
       imageType: ImgType,
       fileType: FileType = 'png';
@@ -26,7 +26,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       res.end(html);
       return;
     }
-    const file = await getScreenshot(html, fileType, isDev, imageType, Boolean(isDiscord));
+    const file = await getScreenshot(html, fileType, isDev, imageType, Boolean(isDiscord), Boolean(isThumb));
     res.statusCode = 200;
     res.setHeader('Content-Type', `image/jpeg`);
     res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);
