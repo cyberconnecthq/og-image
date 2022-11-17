@@ -166,8 +166,7 @@ function getBigSpeakersCss(bgType: number, bgNumber: number) {
 }
 
 function getMoreSpeakersCss(bgType: number, bgNumber: number) {
-  return `
-  .more-speaker-wrapper{
+  return `.more-speaker-wrapper{
     flex-wrap: wrap;
     justify-content: center;
     gap:5px;
@@ -185,6 +184,7 @@ function getMoreSpeakersCss(bgType: number, bgNumber: number) {
   .more-speaker.placeholder{
     color:${getColor(bgType, bgNumber)};
     border:1px dashed ${getColor(bgType, bgNumber)};
+    width:120px;
   }
   .more-speaker.placeholder .avatar{
     justify-content:center;
@@ -769,7 +769,7 @@ function getMoreGuestsImage(req: PosterRequest) {
         })()
   }</div>`;
   return `
-          <div class="wrapper flex">
+          <div class="wrapper flex more-guests">
             <div class="left" style="width:400px">
               ${badgePlaceholder}
               ${badgeImage}
@@ -778,7 +778,7 @@ function getMoreGuestsImage(req: PosterRequest) {
               <style>.org{margin-top:20px;}</style>
               ${orgEle}
             </div>
-            <div class="right" style="width:600px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <div class="right" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;width:auto;max-width:600px">
               ${speakersEle}
             </div>
           </div>`;
