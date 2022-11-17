@@ -174,8 +174,8 @@ function getMoreSpeakersCss(bgType: number, bgNumber: number) {
   .more-speaker{
     display:flex;
     flex-direction:column;
-    width:140px;
-    height:140px;
+    width:130px;
+    height:130px;
     overflow:hidden;
     color:${getColor(bgType, bgNumber)};
     text-align:center;
@@ -770,7 +770,7 @@ function getMoreGuestsImage(req: PosterRequest) {
   }</div>`;
   return `
           <div class="wrapper flex more-guests">
-            <div class="left" style="width:400px">
+            <div class="left" style="width:400px;flex-shrink:0">
               ${badgePlaceholder}
               ${badgeImage}
               ${eventTitleEle}
@@ -778,7 +778,7 @@ function getMoreGuestsImage(req: PosterRequest) {
               <style>.org{margin-top:20px;}</style>
               ${orgEle}
             </div>
-            <div class="right" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;width:auto;max-width:600px">
+            <div class="right" style="display:flex;align-items:center;justify-content:center;flex-shrink:1;width:auto;max-width:600px">
               ${speakersEle}
             </div>
           </div>`;
