@@ -12,7 +12,11 @@ import format from 'date-fns/format';
 import { BG_TYPES } from '../_lib/constants';
 import verifiedIcon from '../_assets/poster/icons/verified';
 import { getColor, getContrastColor } from '../_lib/utils';
-import { bigSpeakerPlaceholder, standardSpeakersPlaceHolder } from '../_assets/poster/speakerPlaceHolder';
+import {
+  bigSpeakerPlaceholder,
+  standardSpeakersPlaceHolder,
+  moreSpeakerPlaceholder,
+} from '../_assets/poster/speakerPlaceHolder';
 import getBadgeImage from '../_components/badgeImage';
 
 const twemoji = require('twemoji');
@@ -183,13 +187,16 @@ function getMoreSpeakersCss(bgType: number, bgNumber: number) {
     border:1px dashed ${getColor(bgType, bgNumber)};
   }
   .more-speaker.placeholder .avatar{
-    display:flex;
     justify-content:center;
     box-sizing:border-box;
     padding:0 3px;
+    border-radius:100px;
   }
   .more-speaker.placeholder svg{
-    width:100%;
+    width:80px;
+    height:80px;
+    margin-top:12px;
+    border-radius:100px;
   }
   .more-speaker .avatar{
     display:flex;
@@ -745,13 +752,13 @@ function getMoreGuestsImage(req: PosterRequest) {
           .join('')
       : (() => {
           return isBadgePreview
-            ? new Array(6)
+            ? new Array(12)
                 .fill(0)
                 .map(
                   (_, i) => `<div class="more-speaker placeholder">
                             <div class="avatar">${
                               // @ts-ignore
-                              bigSpeakerPlaceholder(color, isBadgePreview)
+                              moreSpeakerPlaceholder(color, isBadgePreview)
                             }</div>
                             <div class="name">Speaker</div>
                             <div class="title">Title</div>
@@ -768,7 +775,7 @@ function getMoreGuestsImage(req: PosterRequest) {
               ${badgeImage}
               ${eventTitleEle}
               ${timeEle}
-              <style>.org{margin-top:36px;}</style>
+              <style>.org{margin-top:20px;}</style>
               ${orgEle}
             </div>
             <div class="right" style="width:600px;display:flex;align-items:center;justify-content:center;flex-shrink:0">

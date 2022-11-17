@@ -23,7 +23,7 @@ export const getBadgePlaceHolder = (req: PosterRequest) => {
     `;
     } else {
       return `<svg width="258" height="139" viewBox="0 0 258 139" fill="none" xmlns="http://www.w3.org/2000/svg" class"badge-placeholder" ${
-        req.posterType == PosterType.HighlightGuests
+        req.posterType == PosterType.HighlightGuests || req.posterType == PosterType.MoreGuests
           ? 'style="position:relative;left:-16px;"'
           : 'style="position:absolute;top:35px;right: 35px;"'
       }">
