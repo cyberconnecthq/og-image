@@ -730,12 +730,12 @@ function getMoreGuestsImage(req: PosterRequest) {
   const orgEle = getOrgLogo(orgLogo, orgName, color);
   const speakersLength = speakers.length;
   let adoptedStyle;
-  switch (speakersLength) {
-    case 4:
-    case 2:
-      adoptedStyle = `width:320px;justify-content:center`;
-      break;
-  }
+  // switch (speakersLength) {
+  //   case 4:
+  //   case 2:
+  //     adoptedStyle = `width:320px;justify-content:center`;
+  //     break;
+  // }
   const speakersEle = `<div class="more-speaker-wrapper flex" style="${adoptedStyle}">${
     speakers.length > 0
       ? speakers
@@ -778,7 +778,7 @@ function getMoreGuestsImage(req: PosterRequest) {
               <style>.org{margin-top:20px;}</style>
               ${orgEle}
             </div>
-            <div class="right" style="display:flex;align-items:center;justify-content:center;flex-shrink:1;width:auto;max-width:600px">
+            <div class="right" style="display:flex;align-items:center;justify-content:center;flex-shrink:1;flex-grow:1;width:auto;max-width:600px">
               ${speakersEle}
             </div>
           </div>`;
