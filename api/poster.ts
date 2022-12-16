@@ -12,7 +12,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   // await corsMiddleware(req, res);
   try {
     const { pathname, query } = parse(req.url || '/', true);
-    const { isHtmlDebug, isDownload, isDiscord, isThumb } = query;
+
+    const { isHtmlDebug, isDownload, isDiscord, isThumb, isQueryDebug } = query;
     let html,
       imageType: ImgType,
       fileType: FileType = 'png';
@@ -20,6 +21,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     fileType = 'jpeg';
     const parsedReq = parseRequest('poster', req);
     html = await getPoster(parsedReq as PosterRequest);
+
+    if (isQueryDebug) {
+      return res.send(query);
+    }
 
     if (isHtmlDebug) {
       res.setHeader('Content-Type', 'text/html');
