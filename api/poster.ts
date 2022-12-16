@@ -23,7 +23,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     html = await getPoster(parsedReq as PosterRequest);
 
     if (isQueryDebug) {
-      return res.send(query);
+      return res.end(query);
     }
 
     if (isHtmlDebug) {
