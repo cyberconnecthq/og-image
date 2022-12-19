@@ -18,6 +18,7 @@ export default function getBadgeImage(req: PosterRequest) {
             display:block;
             width:80px;
             height:80px; 
+            object-fit:contain;
           }
           .badge-image div{
             font-weight: 700;
@@ -42,10 +43,13 @@ export default function getBadgeImage(req: PosterRequest) {
             position:absolute;
             top:60px;
             right:35px;
-          }
-          .badge-image.highlight-badge img{
             width:320px;
             height:320px;
+          }
+          .badge-image.highlight-badge img{
+            object-fit:contain;
+            width:100%;
+            height:100%;
           }
           .badge-image.highlight-badge div{
             width:320px;
@@ -64,6 +68,8 @@ export default function getBadgeImage(req: PosterRequest) {
           .badge-image.minimal img{
             display:block;
             width:100%;
+            height:100%;
+            object-fit:contain;
           }
         </style>
   `;
@@ -78,6 +84,7 @@ export default function getBadgeImage(req: PosterRequest) {
       <div class="badge-image highlight-badge"><img src='${badgeUrl}' alt='badge'/><div>Web3 Status Token (WΞST)</div></div>
       `;
       break;
+    case PosterType.MoreGuests:
     case PosterType.HighlightGuests:
       dom = `
       <div class="badge-image highlight-guest"><img src='${badgeUrl}' alt='badge'/><div>Web3 Status Token (WΞST)</div></div>

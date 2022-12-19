@@ -116,12 +116,12 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
-chrome-aws-lambda@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/chrome-aws-lambda/-/chrome-aws-lambda-7.0.0.tgz#efb73c8d254d433413cf6866c5eadc752d64b417"
-  integrity sha512-GbYXRPYtaA0DLfmxQpuZw1SKTP7rOA4UXiATwiFRJ4Ea6PBYSzqK0YjS7B2WimUBe//ybPfNpPIs8A3WpF0xvA==
+chrome-aws-lambda@10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/chrome-aws-lambda/-/chrome-aws-lambda-10.1.0.tgz#ac43b4cdfc1fbb2275c62effada560858099501e"
+  integrity sha512-NZQVf+J4kqG4sVhRm3WNmOfzY0OtTSm+S8rg77pwePa9RCYHzhnzRs8YvNI6L9tALIW6RpmefWiPURt3vURXcw==
   dependencies:
-    lambdafs "^2.0.2"
+    lambdafs "^2.0.3"
 
 cliui@^6.0.0:
   version "6.0.0"
@@ -148,6 +148,14 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
+
+cors@^2.8.5:
+  version "2.8.5"
+  resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.5.tgz#eac11da51592dd86b9f06f6e7ac293b3df875d29"
+  integrity sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
+  dependencies:
+    object-assign "^4"
+    vary "^1"
 
 date-fns@2.29.2:
   version "2.29.2"
@@ -321,7 +329,7 @@ jsonfile@^5.0.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-lambdafs@^2.0.2:
+lambdafs@^2.0.3:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/lambdafs/-/lambdafs-2.1.1.tgz#4bf8d3037b6c61bbb4a22ab05c73ee47964c25ed"
   integrity sha512-x5k8JcoJWkWLvCVBzrl4pzvkEHSgSBqFjg3Dpsc4AcTMq7oUMym4cL/gRTZ6VM4mUMY+M0dIbQ+V1c1tsqqanQ==
@@ -357,12 +365,24 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
+nextjs-cors@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/nextjs-cors/-/nextjs-cors-2.1.2.tgz#f2298e490617ee99dbcbe5901db8307a36c6fe50"
+  integrity sha512-2yOVivaaf2ILe4f/qY32hnj3oC77VCOsUQJQfhVMGsXE/YMEWUY2zy78sH9FKUCM7eG42/l3pDofIzMD781XGA==
+  dependencies:
+    cors "^2.8.5"
+
 node-fetch@2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
+
+object-assign@^4:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
+  integrity sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==
 
 once@^1.3.0, once@^1.3.1, once@^1.4.0:
   version "1.4.0"
@@ -522,7 +542,7 @@ strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   dependencies:
     ansi-regex "^5.0.1"
 
-tar-fs@*, tar-fs@2.1.1:
+tar-fs@2.1.1, tar-fs@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-2.1.1.tgz#489a15ab85f1f0befabb370b7de4f9eb5cbe8784"
   integrity sha512-V0r2Y9scmbDRLCNex/+hYzvp/zyYjvFbHPNgVTKfQvVrb6guiE/fxP+XblDNR011utopbkex2nM4dHNV6GDsng==
@@ -553,19 +573,19 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-twemoji-parser@13.0.0:
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/twemoji-parser/-/twemoji-parser-13.0.0.tgz#bd9d1b98474f1651dc174696b45cabefdfa405af"
-  integrity sha512-zMaGdskpH8yKjT2RSE/HwE340R4Fm+fbie4AaqjDa4H/l07YUmAvxkSfNl6awVWNRRQ0zdzLQ8SAJZuY5MgstQ==
+twemoji-parser@14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/twemoji-parser/-/twemoji-parser-14.0.0.tgz#13dabcb6d3a261d9efbf58a1666b182033bf2b62"
+  integrity sha512-9DUOTGLOWs0pFWnh1p6NF+C3CkQ96PWmEFwhOVmT3WbecRC+68AIqpsnJXygfkFcp4aXbOp8Dwbhh/HQgvoRxA==
 
-twemoji@13.0.1:
-  version "13.0.1"
-  resolved "https://registry.yarnpkg.com/twemoji/-/twemoji-13.0.1.tgz#57ddc8bd86c8175c11376f5f9ab322a02e739c2d"
-  integrity sha512-mrTBq+XpCLM4zm76NJOjLHoQNV9mHdBt3Cba/T5lS1rxn8ArwpqE47mqTocupNlkvcLxoeZJjYSUW0DU5ZwqZg==
+twemoji@14.0.2:
+  version "14.0.2"
+  resolved "https://registry.yarnpkg.com/twemoji/-/twemoji-14.0.2.tgz#c53adb01dab22bf4870f648ca8cc347ce99ee37e"
+  integrity sha512-BzOoXIe1QVdmsUmZ54xbEH+8AgtOKUiG53zO5vVP2iUu6h5u9lN15NcuS6te4OY96qx0H7JK9vjjl9WQbkTRuA==
   dependencies:
     fs-extra "^8.0.1"
     jsonfile "^5.0.0"
-    twemoji-parser "13.0.0"
+    twemoji-parser "14.0.0"
     universalify "^0.1.2"
 
 typescript@4.1.5:
@@ -590,6 +610,11 @@ util-deprecate@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
+
+vary@^1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
+  integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

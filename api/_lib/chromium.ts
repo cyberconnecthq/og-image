@@ -14,12 +14,34 @@ async function getPage(isDev: boolean) {
   return _page;
 }
 
-export async function getScreenshot(html: string, type: FileType, isDev: boolean, imageType: ImgType = 'og') {
+export async function getScreenshot(
+  html: string,
+  type: FileType,
+  isDev: boolean,
+  imageType: ImgType = 'og',
+  isDiscord = false,
+  isThumb = false,
+) {
   const page = await getPage(isDev);
+  let _imageType: ImgType;
+  switch (imageType) {
+    case 'poster':
+      if (isDiscord) {
+        _imageType = 'discord';
+      } else if (isThumb) {
+        _imageType = 'thumbnail';
+      } else {
+        _imageType = imageType;
+      }
+      break;
+    default:
+      _imageType = imageType;
+  }
+
   await page.setViewport({
-    width: imgSize[imageType].width,
-    height: imgSize[imageType].height,
-    deviceScaleFactor: imgSize[imageType].ratio,
+    width: imgSize[_imageType].width,
+    height: imgSize[_imageType].height,
+    deviceScaleFactor: imgSize[_imageType].ratio,
   });
   await page.setContent(html);
   const file = await page.screenshot({ type, omitBackground: true });

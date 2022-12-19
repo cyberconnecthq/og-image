@@ -1,10 +1,10 @@
 export type FileType = 'png' | 'jpeg';
 export type Theme = 'light' | 'dark';
-export type ImgType = 'og' | 'download' | 'poster' | 'badge';
+export type ImgType = 'og' | 'download' | 'poster' | 'badge' | 'discord' | 'thumbnail';
 
 export type OgRequest = {
   displayName: string;
-  displayNameType?: 'ENS' | 'GENERAL';
+  displayNameType?: 'ENS' | 'GENERAL' | 'SID';
   avatar: string;
   avatarType?: 'NFT' | 'GENERAL';
   title?: string;
@@ -19,6 +19,7 @@ export enum PosterType {
   HighlightBadge = 'HighlightBadge',
   HighlightGuests = 'HighlightGuests',
   Minimal = 'Minimal',
+  MoreGuests = 'MoreGuests',
 }
 export type Speakers = {
   avatar: string;
@@ -31,7 +32,7 @@ export type PosterRequest = {
   bgNumber: number;
   eventTitle: string;
   time: number;
-  place: 'twitter' | 'discord';
+  place: Place;
   raffleText: string;
   orgLogo: string;
   orgName: string;
@@ -39,6 +40,8 @@ export type PosterRequest = {
   isBadgePreview?: boolean;
   badgeUrl?: string;
   isDiscord?: boolean;
+  timezone?: string;
+  extraPlaceInfo?: ExtraPlaceInfo;
 };
 
 export type BadgeRequest = {
@@ -55,4 +58,5 @@ export type BadgeRequest = {
 export type ParsedRequest = OgRequest | PosterRequest | BadgeRequest;
 
 export type TextColors = 'white' | 'black';
-export type Place = 'twitter' | 'discord';
+export type Place = 'twitter' | 'discord' | 'others';
+export type ExtraPlaceInfo = 'youtube' | 'binance';

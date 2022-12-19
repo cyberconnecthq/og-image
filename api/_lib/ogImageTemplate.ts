@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
-import { marked } from 'marked';
-import { sanitizeHtml } from './sanitizer';
+// import { marked } from 'marked';
+// import { sanitizeHtml } from './sanitizer';
 import { OgRequest } from './types';
 import getBaseCss from './getBaseCss';
 const twemoji = require('twemoji');
 
 const twOptions = { folder: 'svg', ext: '.svg' };
-const emojify = (text: string) => twemoji.parse(text, twOptions);
+const emojify = (text: string | undefined) => twemoji.parse(text, twOptions);
 
 function getCss(parsedReq: OgRequest) {
   const bgImage = readFileSync(`${__dirname}/../_assets/og/og-card-bg.svg`).toString('base64');
@@ -159,8 +159,6 @@ function getCss(parsedReq: OgRequest) {
     }
     .title{
       display:flex;
-      font-family: 'Outfit';
-      font-style: normal;
       font-weight: 400;
       font-size: 16px;
       color: rgba(255, 255, 255, 0.7);
@@ -196,13 +194,15 @@ function getImage(parsedReq: OgRequest) {
   let displayNameEle;
   if (type == 'PERSONAL') {
     if (displayNameType == 'ENS') {
-      displayNameEle = `<div class="display-name">${displayName.slice(0, -4)}<span>.eth</span></div>`;
+      displayNameEle = `<div class="display-name">${displayName.replace('.eth', '')}<span>.eth</span></div>`;
+    } else if (displayNameType == 'SID') {
+      displayNameEle = `<div class="display-name">${displayName.replace('.bnb', '')}<span>.bnb</span></div>`;
     } else {
       displayNameEle = `<div class="display-name">${displayName}</div>`;
     }
     const avatarEle =
       avatarType == 'GENERAL'
-        ? `<div class="avatar"><img src="${avatar}" alt=""/></div>`
+        ? `<div class="avatar"><img src="${avatar}" alt="" onerror="this.onerror=null; this.src='https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/personal/0001.png'"/></div>`
         : `<div class="avatar hexagon"><div><img src="${avatar}" alt=""/></div></div>`;
     const titleELe = `<div class="title">${title}${
       organization ? "<span class='at'>at</span>" + organization : ''
@@ -217,7 +217,7 @@ function getImage(parsedReq: OgRequest) {
       </div>
     </div>`;
   } else {
-    const avatarEle = `<div class="avatar org"><img src="${avatar}" alt=""/></div>`;
+    const avatarEle = `<div class="avatar org"><img src="${avatar}" alt="" onerror="this.onerror=null; this.src='https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/Enterprise-Logo.png'"/></div>`;
     displayNameEle = `<div class="display-name org">${displayName} ${
       isVerified ? `<img src="data:image/svg+xml;base64,${verifiedIcon}" alt="">` : ''
     }</div>`;

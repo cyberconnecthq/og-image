@@ -1,6 +1,6 @@
 import { IncomingMessage } from 'http';
 import { parse } from 'url';
-import { ParsedRequest, Theme, ImgType, OgRequest } from './types';
+import { ParsedRequest, Theme, ImgType, OgRequest, PosterType } from './types';
 const twemoji = require('twemoji');
 const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
@@ -35,7 +35,7 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
       displayName: Array.isArray(displayName) ? displayName[0] : displayName || '',
       displayNameType: Array.isArray(displayNameType)
         ? 'GENERAL'
-        : displayNameType === 'GENERAL' || displayNameType === 'ENS'
+        : displayNameType === 'GENERAL' || displayNameType === 'ENS' || displayNameType === 'SID'
         ? (displayNameType as OgRequest['displayNameType'])
         : 'GENERAL',
       title: Array.isArray(title) ? title[0] : title || '',
@@ -69,7 +69,12 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
       isBadgePreview: getBoolean(query.isBadgePreview),
       badgeUrl: getString(query.badgeUrl),
       isDiscord: getBoolean(query.isDiscord),
+      timezone: getString(query.timezone),
+      extraPlaceInfo: getString(query.extraPlaceInfo),
     };
+    if (parsedRequest.posterType == PosterType.MoreGuests) {
+      parsedRequest.speakers = query.speakers ? JSON.parse(query.speakers as string).slice(0, 12) : [];
+    }
   }
   // else if (imgType == 'badge') {
   //   parsedRequest = {
