@@ -29,7 +29,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const file = await getScreenshot(html, fileType, isDev, imageType, Boolean(isDiscord), Boolean(isThumb));
     res.statusCode = 200;
     res.setHeader('Content-Type', `image/jpeg`);
-    res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);
+    // res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);
     if (isDownload) {
       res.setHeader('Content-Disposition', ' attachment; filename="Link3_event_poster.jpeg"');
     }
