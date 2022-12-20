@@ -10,9 +10,9 @@ const isDev = !process.env.IS_PROD;
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   // await corsMiddleware(req, res);
+  const { pathname, query } = parse(req.url || '/', true);
+  const { isHtmlDebug, isDownload, isDiscord, isThumb } = query;
   try {
-    const { pathname, query } = parse(req.url || '/', true);
-    const { isHtmlDebug, isDownload, isDiscord, isThumb } = query;
     let html,
       imageType: ImgType,
       fileType: FileType = 'png';
@@ -29,15 +29,15 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const file = await getScreenshot(html, fileType, isDev, imageType, Boolean(isDiscord), Boolean(isThumb));
     res.statusCode = 200;
     res.setHeader('Content-Type', `image/jpeg`);
-    // res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);
+    res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);
     if (isDownload) {
       res.setHeader('Content-Disposition', ' attachment; filename="Link3_event_poster.jpeg"');
     }
     res.end(file);
   } catch (e) {
+    console.error(e + query.toString());
     res.statusCode = 500;
     res.setHeader('Content-Type', 'text/html');
-    res.end('<h1>Internal Error</h1><p>Sorry, there was a problem</p>');
-    console.error(e);
+    res.end('<h1>Internal Error</h1><p>Sorry, there was a problem ' + query.toString() + '</p>');
   }
 }
