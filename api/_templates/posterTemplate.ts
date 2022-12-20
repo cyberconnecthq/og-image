@@ -497,6 +497,7 @@ function getPlaceText(place: Place, extraPlaceInfo?: ExtraPlaceInfo) {
 function getTimeEle(req: PosterRequest) {
   const { posterType, bgType, bgNumber, time, place, raffleText: _raffleText, timezone, extraPlaceInfo } = req;
   const color = BG_TYPES[bgType][bgNumber].textColor;
+  // const raffleText = _raffleText.split('-')[0];
   const _timezone = timezone || '0';
   const raffleText = _raffleText.split('-')[0]; // 如果是token 传过来会带usdc-56这样子
   const isValidRaffleText = raffleText && raffleText.indexOf('undefined') < 0;
