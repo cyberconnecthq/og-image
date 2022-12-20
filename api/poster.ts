@@ -21,6 +21,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const parsedReq = parseRequest('poster', req);
     html = await getPoster(parsedReq as PosterRequest);
 
+    if (isQueryDebug) {
+      return res.end(JSON.stringify(query));
+    }
+
     if (isHtmlDebug) {
       res.setHeader('Content-Type', 'text/html');
       res.end(html);
