@@ -13,7 +13,7 @@ export const imgSize = {
   poster: {
     width: 1000,
     height: 500,
-    ratio: 2,
+    ratio: 1.5,
   },
   discord: {
     width: 1250,
@@ -118,5 +118,5 @@ export const BG_TYPES = [
     { bg: 'bg11-7.jpeg', textColor: 'white' },
     { bg: 'bg11-8.jpeg', textColor: 'white' },
     { bg: 'bg11-9.jpeg', textColor: 'white' },
-  ]
+  ],
 ];
