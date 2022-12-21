@@ -10,10 +10,9 @@ const isDev = !process.env.IS_PROD;
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   // await corsMiddleware(req, res);
+  const { pathname, query } = parse(req.url || '/', true);
+  const { isHtmlDebug, isDownload, isDiscord, isThumb } = query;
   try {
-    const { pathname, query } = parse(req.url || '/', true);
-
-    const { isHtmlDebug, isDownload, isDiscord, isThumb, isQueryDebug } = query;
     let html,
       imageType: ImgType,
       fileType: FileType = 'png';
@@ -22,9 +21,9 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const parsedReq = parseRequest('poster', req);
     html = await getPoster(parsedReq as PosterRequest);
 
-    if (isQueryDebug) {
-      return res.end(JSON.stringify(query));
-    }
+    // if (isQueryDebug) {
+    //   return res.end(JSON.stringify(query));
+    // }
 
     if (isHtmlDebug) {
       res.setHeader('Content-Type', 'text/html');
@@ -40,9 +39,9 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
     res.end(file);
   } catch (e) {
+    console.error(e + JSON.stringify(query));
     res.statusCode = 500;
     res.setHeader('Content-Type', 'text/html');
-    res.end('<h1>Internal Error</h1><p>Sorry, there was a problem</p>');
-    console.error(e);
+    res.end('<h1>Internal Error</h1><p>Sorry, there was a problem ' + JSON.stringify(query) + '</p>');
   }
 }
