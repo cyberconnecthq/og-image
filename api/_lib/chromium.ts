@@ -5,11 +5,13 @@ import { imgSize } from './constants';
 let _page: core.Page | null;
 
 async function getPage(isDev: boolean) {
-  if (_page) {
-    return _page;
-  }
+  // if (_page) {
+  //   console.log(_page.isClosed());
+  //   return _page;
+  // }
   const options = await getOptions(isDev);
   const browser = await core.launch(options);
+  // _page = await browser.defaultPage();
   _page = await browser.newPage();
   return _page;
 }
@@ -38,12 +40,12 @@ export async function getScreenshot(
       _imageType = imageType;
   }
 
-  await page.setContent(html);
   await page.setViewport({
     width: imgSize[_imageType].width,
     height: imgSize[_imageType].height,
     deviceScaleFactor: imgSize[_imageType].ratio,
   });
+  await page.setContent(html);
   const file = await page.screenshot({ type, omitBackground: true });
   return file;
 }
