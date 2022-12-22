@@ -6,7 +6,16 @@ let _page: core.Page | null;
 
 async function getPage(isDev: boolean) {
   if (_page) {
-    return _page;
+    let pageCrashed = false;
+    try {
+      const content = await _page.content();
+      return _page;
+    } catch (e) {
+      const options = await getOptions(isDev);
+      const browser = await core.launch(options);
+      _page = await browser.newPage();
+      return _page;
+    }
   }
   const options = await getOptions(isDev);
   const browser = await core.launch(options);
@@ -43,7 +52,12 @@ export async function getScreenshot(
     height: imgSize[_imageType].height,
     deviceScaleFactor: imgSize[_imageType].ratio,
   });
-  await page.setContent(html);
-  const file = await page.screenshot({ type, omitBackground: true });
-  return file;
+  try {
+    await page.setContent(html, { waitUntil: 'networkidle2', timeout: 60000 });
+    const file = await page.screenshot({ type, omitBackground: true });
+    return file;
+  } catch (e) {
+    console.log({ html });
+    throw e;
+  }
 }

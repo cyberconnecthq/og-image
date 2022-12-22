@@ -462,7 +462,10 @@ function getImage(parsedReq: PosterRequest) {
 
 function getOrgLogo(orgLogo: string, orgName: string, color: string) {
   return `<div class="org flex">
-  <div class="org-logo"><img src='${orgLogo}' alt='org-logo'/></div>
+  <div class="org-logo"><img src='${orgLogo.replace(
+    'cyberconnect.mypinata.cloud',
+    'ipfs.cyberconnect.dev',
+  )}' alt='org-logo'/></div>
   <div class="org-name">${orgName}</div>
   ${verifiedIcon(color as TextColors)}
   <div class='host'>Host</div>
