@@ -38,12 +38,12 @@ export async function getScreenshot(
       _imageType = imageType;
   }
 
+  await page.setContent(html);
   await page.setViewport({
     width: imgSize[_imageType].width,
     height: imgSize[_imageType].height,
     deviceScaleFactor: imgSize[_imageType].ratio,
   });
-  await page.setContent(html);
   const file = await page.screenshot({ type, omitBackground: true });
   return file;
 }
