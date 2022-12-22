@@ -53,7 +53,7 @@ export async function getScreenshot(
     deviceScaleFactor: imgSize[_imageType].ratio,
   });
   try {
-    await page.setContent(html, { waitUntil: 'networkidle0', timeout: 60000 });
+    await page.setContent(html, { waitUntil: 'networkidle2', timeout: 60000 });
     const file = await page.screenshot({ type, omitBackground: true });
     return file;
   } catch (e) {
