@@ -55,7 +55,6 @@ export async function getScreenshot(
   try {
     await page.setContent(html, { waitUntil: 'networkidle2', timeout: 60000 });
     await page.waitForNetworkIdle();
-    await page.waitUntilVisible('org-logo');
     const file = await page.screenshot({ type, omitBackground: true });
     return file;
   } catch (e) {
