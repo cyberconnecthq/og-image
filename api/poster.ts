@@ -39,7 +39,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
     res.end(file);
   } catch (e) {
-    console.error(e + JSON.stringify(query));
+    console.error(e);
     res.statusCode = 500;
     res.setHeader('Content-Type', 'text/html');
     res.end('<h1>Internal Error</h1><p>Sorry, there was a problem ' + JSON.stringify(query) + '</p>');
