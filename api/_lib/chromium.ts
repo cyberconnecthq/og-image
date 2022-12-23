@@ -11,10 +11,8 @@ async function getPage(isDev: boolean) {
       const content = await _page.content();
       return _page;
     } catch (e) {
-      const options = await getOptions(isDev);
-      const browser = await core.launch(options);
-      _page = await browser.newPage();
-      return _page;
+      _page = null;
+      getPage(isDev);
     }
   }
   const options = await getOptions(isDev);

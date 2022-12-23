@@ -59,7 +59,7 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
       posterType: getString(query.posterType, 'Standard'),
       bgType: getNumber(query.bgType),
       bgNumber: getNumber(query.bgNumber),
-      eventTitle: emojify(decodeURIComponent(getString(query.eventTitle))),
+      eventTitle: emojify(decodeURIComponent(getString(query.eventTitle).replace(/%/g, '%25'))),
       time: getString(query.time),
       place: getString(query.place, 'twitter'),
       raffleText: getString(query.raffleText),
