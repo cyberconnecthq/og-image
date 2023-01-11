@@ -18,9 +18,9 @@ import {
   moreSpeakerPlaceholder,
 } from '../_assets/poster/speakerPlaceHolder';
 import getBadgeImage from '../_components/badgeImage';
+import { twOptions } from '../_lib/utils';
 
 const twemoji = require('twemoji');
-const twOptions = { folder: 'svg', ext: '.svg' };
 
 // TODO：emoji support
 const emojify = (text: string) => twemoji.parse(text, twOptions);

@@ -1,8 +1,8 @@
 import { IncomingMessage } from 'http';
 import { parse } from 'url';
 import { ParsedRequest, Theme, ImgType, OgRequest, PosterType } from './types';
+import { twOptions } from './utils';
 const twemoji = require('twemoji');
-const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequest {
   // // console.log("HTTP " + req.url);

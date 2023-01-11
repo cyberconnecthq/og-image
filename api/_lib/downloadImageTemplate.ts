@@ -2,9 +2,9 @@ import { readFileSync } from 'fs';
 import { OgRequest } from './types';
 import getBaseCss from './getBaseCss';
 import QRCode from 'qrcode';
+import { twOptions } from './utils';
 
 const twemoji = require('twemoji');
-const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 const bgImage = readFileSync(`${__dirname}/../_assets/og/nft-card-bg.svg`).toString('base64');
 function getCss() {

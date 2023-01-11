@@ -3,9 +3,9 @@ import { readFileSync } from 'fs';
 // import { sanitizeHtml } from './sanitizer';
 import { OgRequest } from './types';
 import getBaseCss from './getBaseCss';
+import { twOptions } from './utils';
 const twemoji = require('twemoji');
 
-const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string | undefined) => twemoji.parse(text, twOptions);
 
 function getCss(parsedReq: OgRequest) {
