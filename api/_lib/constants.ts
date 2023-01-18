@@ -119,4 +119,11 @@ export const BG_TYPES = [
     { bg: 'bg11-8.jpeg', textColor: 'white' },
     { bg: 'bg11-9.jpeg', textColor: 'white' },
   ],
+  [
+    { bg: 'bg12-0.jpeg', textColor: 'white' },
+    { bg: 'bg12-1.jpeg', textColor: 'white' },
+    { bg: 'bg12-2.jpeg', textColor: 'white' },
+    { bg: 'bg12-3.jpeg', textColor: 'white' },
+    { bg: 'bg12-4.jpeg', textColor: 'white' },
+  ],
 ];
