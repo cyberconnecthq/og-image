@@ -464,7 +464,7 @@ function getOrgLogo(orgLogo: string, orgName: string, color: string) {
   return `<div class="org flex">
   <div class="org-logo"><img src='${orgLogo.replace(
     'cyberconnect.mypinata.cloud',
-    'ipfs.cyberconnect.dev',
+    'ccgateway.infura-ipfs.io',
   )}' alt='org-logo'/></div>
   <div class="org-name">${orgName}</div>
   ${verifiedIcon(color as TextColors)}
