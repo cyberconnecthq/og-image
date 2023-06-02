@@ -1,3 +1,5 @@
+import { Host, PosterType as OfflineEventPosterType } from '../_components/offlneEvent/type';
+
 export type FileType = 'png' | 'jpeg';
 export type Theme = 'light' | 'dark';
 export type ImgType = 'og' | 'download' | 'poster' | 'badge' | 'discord' | 'thumbnail';
@@ -53,6 +55,15 @@ export type BadgeRequest = {
   logoUrl: string;
   bgUrl?: string;
   textColor: TextColors;
+};
+export type OfflineEventPosterReq = {
+  title: string;
+  startTime: string;
+  endTime: string;
+  venue: string;
+  host: Host[];
+  posterType: OfflineEventPosterType;
+  bgNumber: number;
 };
 
 export type ParsedRequest = OgRequest | PosterRequest | BadgeRequest;

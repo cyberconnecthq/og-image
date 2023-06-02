@@ -8,12 +8,15 @@
     "date-fns": "2.29.2",
     "marked": "4.0.10",
     "nextjs-cors": "2.1.2",
+    "postcss": "8.4.24",
+    "postcss-js": "4.0.1",
     "puppeteer-core": "^10.4.0",
     "qrcode": "1.5.1",
     "twemoji": "14.0.2"
   },
   "devDependencies": {
     "@types/marked": "4.0.1",
+    "@types/postcss-js": "^4.0.1",
     "@types/puppeteer": "5.4.4",
     "@types/puppeteer-core": "5.4.0",
     "@types/qrcode": "^1.4.2",

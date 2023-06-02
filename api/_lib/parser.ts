@@ -1,7 +1,8 @@
 import { IncomingMessage } from 'http';
 import { parse } from 'url';
-import { ParsedRequest, Theme, ImgType, OgRequest, PosterType } from './types';
+import { ParsedRequest, Theme, ImgType, OgRequest, PosterType, OfflineEventPosterReq } from './types';
 import { twOptions } from './utils';
+import { PosterType as OfflineEventPosterType } from '../_components/offlneEvent/type';
 const twemoji = require('twemoji');
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequest {
@@ -65,7 +66,7 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
       raffleText: getString(query.raffleText),
       orgLogo: getString(query.orgLogo),
       orgName: getString(query.orgName),
-      speakers: query.speakers ? JSON.parse(query.speakers as string).slice(0, 6) : [],
+      speakers: query.speakers ? JSON.parse(decodeURIComponent(query.speakers as string)).slice(0, 6) : [],
       isBadgePreview: getBoolean(query.isBadgePreview),
       badgeUrl: getString(query.badgeUrl),
       isDiscord: getBoolean(query.isDiscord),
@@ -92,6 +93,21 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
   // @ts-ignore
   return parsedRequest;
 }
+
+export const parseOfflineEventQuery = (req: IncomingMessage): OfflineEventPosterReq => {
+  const { pathname, query } = parse(req.url || '/', true);
+  return {
+    title: emojify(decodeURIComponent(getString(query.title))),
+    startTime: getString(query.startTime),
+    endTime: getString(query.endTime),
+    venue: getString(query.venue),
+    host: query.host ? JSON.parse(query.host as string) : [],
+    posterType: query.posterType
+      ? (getNumber(query.posterType) as unknown as OfflineEventPosterType)
+      : OfflineEventPosterType.EVENT,
+    bgNumber: getNumber(query.bgNumber),
+  };
+};
 
 function getArray(stringOrArray: string[] | string | undefined): string[] {
   if (typeof stringOrArray === 'undefined') {
