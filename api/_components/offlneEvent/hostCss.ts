@@ -8,11 +8,12 @@ export default function hostCss(posterType: PosterType, hostLength: number) {
       font-weight:500;
       border: 1.5px solid #FFFFFF;
       border-radius: 3px;
-      margin-bottom:32px;
+      margin-bottom:${posterType === PosterType.EVENT ? '32px;' : '0'};
       align-items:center;
       justify-content:center;
       width:fit-content;
-      padding:0 8px;
+      height:fit-content;
+      padding:${posterType === PosterType.STANDARD ? '3px 8px' : '0 8px'};
     }
     .hostWrapper{
       display:flex;
@@ -42,10 +43,10 @@ export default function hostCss(posterType: PosterType, hostLength: number) {
     }
     .host img{
       display:block;
-      width:${posterType === PosterType.EVENT ? '25px' : '70px'};
-      height:${posterType === PosterType.EVENT ? '25px' : '70px'};
+      width:${posterType === PosterType.HOST ? '70px' : '25px'};
+      height:${posterType === PosterType.HOST ? '70px' : '25px'};
       border:1.5px solid #fff;
-      border-radius: ${posterType === PosterType.EVENT ? '3px' : '5px'};
+      border-radius: ${posterType === PosterType.HOST ? '5px' : '3px'};
     }
   `;
 }

@@ -8,11 +8,12 @@ export default function wrapperCss(postType: PosterType, bgNumber: number) {
   return `
     .wrapper{
       display:flex;
+      box-sizing: border-box;
       flex-direction: ${postType === PosterType.STANDARD ? 'column' : 'row'};
       align-items: ${postType === PosterType.EVENT ? 'center' : 'normal'};
       gap: ${layoutColumnGap[postType]};
-      width: 100%;
-      height: 100%;
+      width:1000px;
+      height:500px;
       background-image: url(${getBg(bgNumber)});
       background-size: cover;
       color: #ffffff;

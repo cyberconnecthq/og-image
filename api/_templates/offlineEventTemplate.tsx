@@ -20,6 +20,7 @@ export function getOfflineEventTemplate(parsedReq: OfflineEventPosterReq) {
   return `<!DOCTYPE html>
     <html>
       <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
     <head>
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +45,7 @@ export function getOfflineEventTemplate(parsedReq: OfflineEventPosterReq) {
         <div class="titleWrapper"> 
           <div class="title">${emojify(title)}</div>
             ${posterType === PosterType.HOST ? `${info(time, venue)}` : ''}
-          </div>
+        </div>
         ${
           posterType === PosterType.EVENT
             ? '<div class="divider" style="height: 90%; width: 2px; background-color:#fff"></div>'
@@ -56,9 +57,11 @@ export function getOfflineEventTemplate(parsedReq: OfflineEventPosterReq) {
           <div style="${
             posterType === PosterType.EVENT
               ? `height:210px`
-              : `height: 100%;width:100%;
+              : posterType === PosterType.HOST
+              ? `height: 100%;width:100%;
                  align-items: center;
                  display: flex;`
+              : `display: flex;gap:28px;`
           }">
             ${posterType !== PosterType.HOST ? `<div class="hostTag">Host</div>` : ''}
             <div class="hostWrapper">
@@ -73,10 +76,9 @@ export function getOfflineEventTemplate(parsedReq: OfflineEventPosterReq) {
               .join('')}
             </div>
           </div>
-          ${posterType === PosterType.EVENT ? `${info(time, venue)}` : ''}
+          ${posterType !== PosterType.HOST ? `${info(time, venue)}` : ''}
         </div>
-      </>
-      
+      </div>
     </body>
 </html>`;
 }

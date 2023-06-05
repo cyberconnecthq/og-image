@@ -101,5 +101,8 @@ export function getOfflineEventPosterBaseCss() {
   .flex{
     display:flex;
   }
+  *{
+    box-sizing:border-box;
+  }
   `;
 }
