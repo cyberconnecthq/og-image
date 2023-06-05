@@ -58,8 +58,9 @@ export type BadgeRequest = {
 };
 export type OfflineEventPosterReq = {
   title: string;
-  startTime: string;
-  endTime: string;
+  // startTime: string;
+  // endTime: string;
+  time: string;
   venue: string;
   host: Host[];
   posterType: OfflineEventPosterType;

@@ -1,10 +1,9 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { parseOfflineEventQuery, parseRequest } from './_lib/parser';
+import { parseOfflineEventQuery } from './_lib/parser';
 import { getScreenshot } from './_lib/chromium';
 import { parse } from 'url';
-import { getPoster } from './_templates/posterTemplate';
-import { FileType, ImgType, PosterRequest } from './_lib/types';
-import offlineEventTemplate from './_templates/offlineEventTemplate';
+import { FileType, ImgType } from './_lib/types';
+import { getOfflineEventTemplate } from './_templates/offlineEventTemplate';
 // import { corsMiddleware } from './_lib/corsMiddleware';
 
 const isDev = !process.env.IS_PROD;
@@ -16,12 +15,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   try {
     let html,
       imageType: ImgType,
-      fileType: FileType = 'png';
+      fileType: FileType = 'jpeg';
     imageType = 'poster';
-    fileType = 'jpeg';
     const parsedReq = parseOfflineEventQuery(req);
-    html = offlineEventTemplate(parsedReq);
 
+    html = getOfflineEventTemplate(parsedReq);
+    // console.log(parsedReq);
     // if (isQueryDebug) {
     //   return res.end(JSON.stringify(query));
     // }
@@ -36,10 +35,11 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     res.setHeader('Content-Type', `image/jpeg`);
     res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);
     if (isDownload) {
-      res.setHeader('Content-Disposition', ' attachment; filename="Link3_event_poster.jpeg"');
+      res.setHeader('Content-Disposition', ' attachment; filename="Link3_offline_event_poster.jpeg"');
     }
     res.end(file);
   } catch (e) {
+    console.log(query);
     console.error(e);
     res.statusCode = 500;
     res.setHeader('Content-Type', 'text/html');

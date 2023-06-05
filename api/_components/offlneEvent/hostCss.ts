@@ -2,26 +2,26 @@ import { PosterType } from './type';
 
 export default function hostCss(posterType: PosterType, hostLength: number) {
   return `
-  .hostTag{
-    display:flex;
-    font-size:12px;
-    font-weight:500;
-    border: 1.5px solid #FFFFFF;
-    border-radius: 3px;
-    margin-bottom:32px;
-    align-items:center;
-    justify-content:center;
-    width:fit-content;
-    padding:0 8px;
-  }
-  .hostWrapper{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    width:100%;
-    gap:10px;
-    row-gap: 15px;
-  }
+    .hostTag{
+      display:flex;
+      font-size:12px;
+      font-weight:500;
+      border: 1.5px solid #FFFFFF;
+      border-radius: 3px;
+      margin-bottom:32px;
+      align-items:center;
+      justify-content:center;
+      width:fit-content;
+      padding:0 8px;
+    }
+    .hostWrapper{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      width:100%;
+      gap:10px;
+      row-gap: 18px;
+    }
     .host{
       display: flex;
       width: ${posterType === PosterType.HOST ? 'calc(25% - 10px)' : 'auto'};

@@ -98,8 +98,9 @@ export const parseOfflineEventQuery = (req: IncomingMessage): OfflineEventPoster
   const { pathname, query } = parse(req.url || '/', true);
   return {
     title: emojify(decodeURIComponent(getString(query.title))),
-    startTime: getString(query.startTime),
-    endTime: getString(query.endTime),
+    // startTime: getString(query.startTime),
+    // endTime: getString(query.endTime),
+    time: getString(query.time),
     venue: getString(query.venue),
     host: query.host ? JSON.parse(query.host as string) : [],
     posterType: query.posterType
