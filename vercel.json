@@ -5,7 +5,8 @@
     { "source": "/download.png", "destination": "/api/index" },
     { "source": "/poster", "destination": "/api/poster" },
     { "source": "/badge", "destination": "/api/badge" },
-    { "source": "/offlineEventPoster", "destination": "/api/offlineEvent" }
+    { "source": "/offlineEventPoster", "destination": "/api/offlineEvent" },
+    { "source": "/invitationCard", "destination": "/api/invitationCard" }
   ],
   "regions": ["sfo1", "lhr1", "hkg1", "syd1"]
 }

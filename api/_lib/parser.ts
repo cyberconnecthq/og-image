@@ -1,6 +1,14 @@
 import { IncomingMessage } from 'http';
 import { parse } from 'url';
-import { ParsedRequest, Theme, ImgType, OgRequest, PosterType, OfflineEventPosterReq } from './types';
+import {
+  ParsedRequest,
+  Theme,
+  ImgType,
+  OgRequest,
+  PosterType,
+  OfflineEventPosterReq,
+  InvitationCardReq,
+} from './types';
 import { twOptions } from './utils';
 import { PosterType as OfflineEventPosterType } from '../_components/offlneEvent/type';
 const twemoji = require('twemoji');
@@ -107,6 +115,18 @@ export const parseOfflineEventQuery = (req: IncomingMessage): OfflineEventPoster
       ? (getNumber(query.posterType) as unknown as OfflineEventPosterType)
       : OfflineEventPosterType.EVENT,
     bgNumber: getNumber(query.bgNumber),
+  };
+};
+export const parseInvitationQuery = (req: IncomingMessage): InvitationCardReq => {
+  const { pathname, query } = parse(req.url || '/', true);
+  return {
+    title: emojify(decodeURIComponent(getString(query.title))),
+    time: getString(query.time),
+    invitee: getString(query.invitee),
+    venue: getString(query.venue, undefined),
+    host: query.host ? JSON.parse(query.host as string) : [],
+    bgNumber: getNumber(query.bgNumber),
+    qrcodeString: getString(query.qrcodeString),
   };
 };
 

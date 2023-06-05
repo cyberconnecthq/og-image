@@ -30,6 +30,11 @@ export const imgSize = {
     height: 500,
     ratio: 1,
   },
+  invitationCard: {
+    width: 900,
+    height: 1200,
+    ratio: 1,
+  },
 };
 
 export const BG_TYPES = [

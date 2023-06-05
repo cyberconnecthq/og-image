@@ -1,7 +1,8 @@
 import { PosterType, layoutColumnGap } from './type';
 
 const getBg = (bgNumber: number) => {
-  return `https://image-stg.s3.us-west-2.amazonaws.com/link3/poster/bg2-3.jpeg`;
+  // 0-11
+  return `https://link3-image.cyberconnect.dev/offlineeventposterbg/${bgNumber}.jpg`;
 };
 
 export default function wrapperCss(postType: PosterType, bgNumber: number) {

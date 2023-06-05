@@ -45,7 +45,8 @@ export default function hostCss(posterType: PosterType, hostLength: number) {
       display:block;
       width:${posterType === PosterType.HOST ? '70px' : '25px'};
       height:${posterType === PosterType.HOST ? '70px' : '25px'};
-      border:1.5px solid #fff;
+      border:1px solid #fff;
+      vertical-align:middle;
       border-radius: ${posterType === PosterType.HOST ? '5px' : '3px'};
     }
   `;

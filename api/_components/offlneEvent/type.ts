@@ -10,7 +10,7 @@ export enum PosterType {
 export const layoutColumnGap: { [key: number]: string } = {
   [PosterType.EVENT]: '32px',
   [PosterType.HOST]: '44px',
-  [PosterType.STANDARD]: '50px',
+  [PosterType.STANDARD]: '40px',
 };
 export const titleStyle: { [key: number]: string } = {
   [PosterType.EVENT]: `
