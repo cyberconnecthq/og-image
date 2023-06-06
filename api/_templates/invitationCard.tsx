@@ -13,8 +13,8 @@ const emojify = (text: string) => twemoji.parse(text, twOptions);
 
 export async function getInvitationCard(parsedReq: InvitationCardReq) {
   const defaultOrgAvatar = 'https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/Enterprise-Logo.png';
-  const { title, time, venue, host, bgNumber, invitee } = parsedReq;
-  const qrcode = await QRCode.toDataURL('https://link3.com', {
+  const { title, time, venue, host, bgNumber, invitee, qrcodeString } = parsedReq;
+  const qrcode = await QRCode.toDataURL(qrcodeString, {
     margin: 2,
     color: { light: '#000', dark: '#fff' },
   });
