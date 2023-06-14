@@ -8,14 +8,11 @@ import hostCss from '../_components/offlneEvent/hostCss';
 import info from '../_components/offlneEvent/info';
 
 const twemoji = require('twemoji');
-
 // TODO：emoji support
 const emojify = (text: string) => twemoji.parse(text, twOptions);
-
 export function getOfflineEventTemplate(parsedReq: OfflineEventPosterReq) {
   const defaultOrgAvatar = 'https://image-stg.s3.us-west-2.amazonaws.com/link3/avatar/Enterprise-Logo.png';
   const { title, time, venue, host, posterType, bgNumber } = parsedReq;
-  console.log('parsedReq', parsedReq);
   const hostLength = host?.length;
   return `<!DOCTYPE html>
     <html>
@@ -43,7 +40,7 @@ export function getOfflineEventTemplate(parsedReq: OfflineEventPosterReq) {
     <body>
       <div class="wrapper">
         <div class="titleWrapper"> 
-          <div class="title">${emojify(title)}</div>
+          <div class="title">${title}</div>
             ${posterType === PosterType.HOST ? `${info(time, venue)}` : ''}
         </div>
         ${

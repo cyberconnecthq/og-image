@@ -6,7 +6,8 @@
     { "source": "/poster", "destination": "/api/poster" },
     { "source": "/badge", "destination": "/api/badge" },
     { "source": "/offlineEventPoster", "destination": "/api/offlineEvent" },
-    { "source": "/invitationCard", "destination": "/api/invitationCard" }
+    { "source": "/invitationCard", "destination": "/api/invitationCard" },
+    { "source": "/offliveEventQrcode", "destination": "/api/offlineEventQrcode" }
   ],
   "regions": ["sfo1", "lhr1", "hkg1", "syd1"]
 }

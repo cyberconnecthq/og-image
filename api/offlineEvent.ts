@@ -34,6 +34,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     res.statusCode = 200;
     res.setHeader('Content-Type', `image/jpeg`);
     res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);
+    res.setHeader('Access-Control-Allow-Origin', `*`);
+
     if (isDownload) {
       res.setHeader('Content-Disposition', ' attachment; filename="Link3_offline_event_poster.jpeg"');
     }

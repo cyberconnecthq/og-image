@@ -8,6 +8,7 @@ import {
   PosterType,
   OfflineEventPosterReq,
   InvitationCardReq,
+  OfflineEventQrcodeReq,
 } from './types';
 import { twOptions } from './utils';
 import { PosterType as OfflineEventPosterType } from '../_components/offlneEvent/type';
@@ -115,6 +116,12 @@ export const parseOfflineEventQuery = (req: IncomingMessage): OfflineEventPoster
       ? (getNumber(query.posterType) as unknown as OfflineEventPosterType)
       : OfflineEventPosterType.EVENT,
     bgNumber: getNumber(query.bgNumber),
+  };
+};
+export const parseOfflineEventQrCodeQuery = (req: IncomingMessage): OfflineEventQrcodeReq => {
+  const { pathname, query } = parse(req.url || '/', true);
+  return {
+    qrcodeString: getString(query.qrcodeString),
   };
 };
 export const parseInvitationQuery = (req: IncomingMessage): InvitationCardReq => {

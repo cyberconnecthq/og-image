@@ -1,9 +1,9 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { parseInvitationQuery } from './_lib/parser';
+import { parseOfflineEventQrCodeQuery, parseOfflineEventQuery } from './_lib/parser';
 import { getScreenshot } from './_lib/chromium';
 import { parse } from 'url';
 import { FileType, ImgType } from './_lib/types';
-import { getInvitationCard } from './_templates/invitationCard';
+import { getTemplate } from './_templates/offlineEventQrcodeTemplate';
 // import { corsMiddleware } from './_lib/corsMiddleware';
 
 const isDev = !process.env.IS_PROD;
@@ -16,10 +16,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     let html,
       imageType: ImgType,
       fileType: FileType = 'jpeg';
-    imageType = 'invitationCard';
-    const parsedReq = parseInvitationQuery(req);
+    imageType = 'qrcode';
+    const urlReq = parseOfflineEventQrCodeQuery(req);
 
-    html = await getInvitationCard(parsedReq);
+    html = await getTemplate(urlReq);
     // console.log(parsedReq);
     // if (isQueryDebug) {
     //   return res.end(JSON.stringify(query));
@@ -34,7 +34,6 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     res.statusCode = 200;
     res.setHeader('Content-Type', `image/jpeg`);
     res.setHeader('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`);
-    res.setHeader('Access-Control-Allow-Origin', `*`);
     if (isDownload) {
       res.setHeader('Content-Disposition', ' attachment; filename="Link3_offline_event_poster.jpeg"');
     }

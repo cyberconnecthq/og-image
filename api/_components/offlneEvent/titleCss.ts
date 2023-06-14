@@ -13,5 +13,9 @@ export default function titleCss(postType: PosterType, title: string) {
     flex-direction:column;
     justify-content:space-between;
   }
+  .title img{
+    display:inline-block;
+    height:50px;
+  }
   `;
 }

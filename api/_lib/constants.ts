@@ -35,6 +35,11 @@ export const imgSize = {
     height: 1200,
     ratio: 1,
   },
+  qrcode: {
+    width: 500,
+    height: 500,
+    ratio: 1,
+  },
 };
 
 export const BG_TYPES = [

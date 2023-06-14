@@ -2,7 +2,7 @@ import { Host, PosterType as OfflineEventPosterType } from '../_components/offln
 
 export type FileType = 'png' | 'jpeg';
 export type Theme = 'light' | 'dark';
-export type ImgType = 'og' | 'download' | 'poster' | 'badge' | 'discord' | 'thumbnail' | 'invitationCard';
+export type ImgType = 'og' | 'download' | 'poster' | 'badge' | 'discord' | 'thumbnail' | 'invitationCard' | 'qrcode';
 
 export type OgRequest = {
   displayName: string;
@@ -65,6 +65,9 @@ export type OfflineEventPosterReq = {
   host: Host[];
   posterType: OfflineEventPosterType;
   bgNumber: number;
+};
+export type OfflineEventQrcodeReq = {
+  qrcodeString: string;
 };
 
 export type InvitationCardReq = {

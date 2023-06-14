@@ -2,7 +2,7 @@ import {} from './type';
 
 const getBg = (bgNumber: number) => {
   // 0-23
-  return `https://link3-image.cyberconnect.dev/offlineeventposterbg/${bgNumber}.jpg`;
+  return `https://link3-image.cyberconnect.dev/invitationCard/${bgNumber}.jpg`;
 };
 
 export default function wrapperCss(bgNumber: number) {
