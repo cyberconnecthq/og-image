@@ -18,9 +18,9 @@ import {
   moreSpeakerPlaceholder,
 } from '../_assets/poster/speakerPlaceHolder';
 import getBadgeImage from '../_components/badgeImage';
+import { twOptions } from '../_lib/utils';
 
 const twemoji = require('twemoji');
-const twOptions = { folder: 'svg', ext: '.svg' };
 
 // TODO：emoji support
 const emojify = (text: string) => twemoji.parse(text, twOptions);
@@ -464,7 +464,7 @@ function getOrgLogo(orgLogo: string, orgName: string, color: string) {
   return `<div class="org flex">
   <div class="org-logo"><img src='${orgLogo.replace(
     'cyberconnect.mypinata.cloud',
-    'ipfs.cyberconnect.dev',
+    'ccgateway.infura-ipfs.io',
   )}' alt='org-logo'/></div>
   <div class="org-name">${orgName}</div>
   ${verifiedIcon(color as TextColors)}

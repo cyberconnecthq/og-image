@@ -79,3 +79,30 @@ export function getPosterBaseCss() {
   }
   `;
 }
+
+export function getOfflineEventPosterBaseCss() {
+  return `
+  @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+  html,body {
+    width:100%;
+    height:100%;
+    margin:0;padding:0;
+    box-sizing:border-box;
+    font-family:'Lexend', 'Noto Sans SC', 'Noto Sans JP', 'Open Sans', 'Noto Sans KR', 'Noto Color Emoji', Microsoft Yahei, PingFang SC, PingFang TC, Hiragino Sans, Hiragino Kaku Gothic Pro, -apple-system,
+    system-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Fira Sans, Ubuntu, Oxygen, Oxygen Sans, Cantarell,
+    Droid Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Emoji, Segoe UI Symbol, Lucida Grande, Helvetica, Arial,
+    sans-serif;
+  }
+  .flex{
+    display:flex;
+  }
+  *{
+    box-sizing:border-box;
+  }
+  `;
+}

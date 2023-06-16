@@ -30,6 +30,16 @@ export const imgSize = {
     height: 500,
     ratio: 1,
   },
+  invitationCard: {
+    width: 900,
+    height: 1200,
+    ratio: 1,
+  },
+  qrcode: {
+    width: 500,
+    height: 500,
+    ratio: 1,
+  },
 };
 
 export const BG_TYPES = [
@@ -118,5 +128,33 @@ export const BG_TYPES = [
     { bg: 'bg11-7.jpeg', textColor: 'white' },
     { bg: 'bg11-8.jpeg', textColor: 'white' },
     { bg: 'bg11-9.jpeg', textColor: 'white' },
+  ],
+  [
+    { bg: 'bg12-0.jpeg', textColor: 'white' },
+    { bg: 'bg12-1.jpeg', textColor: 'white' },
+    { bg: 'bg12-2.jpeg', textColor: 'white' },
+    { bg: 'bg12-3.jpeg', textColor: 'white' },
+    { bg: 'bg12-4.jpeg', textColor: 'white' },
+  ],
+  [
+    { bg: 'bg13-0.jpeg', textColor: 'black' },
+    { bg: 'bg13-1.jpeg', textColor: 'black' },
+    { bg: 'bg13-2.jpeg', textColor: 'black' },
+    { bg: 'bg13-3.jpeg', textColor: 'black' },
+    { bg: 'bg13-4.jpeg', textColor: 'black' },
+  ],
+  [
+    { bg: 'bg14-0.jpeg', textColor: 'black' },
+    { bg: 'bg14-1.jpeg', textColor: 'black' },
+    { bg: 'bg14-2.jpeg', textColor: 'black' },
+    { bg: 'bg14-3.jpeg', textColor: 'black' },
+    { bg: 'bg14-4.jpeg', textColor: 'black' },
+  ],
+  [
+    { bg: 'bg15-0.jpg', textColor: 'white' },
+    { bg: 'bg15-1.jpg', textColor: 'white' },
+    { bg: 'bg15-2.jpg', textColor: 'white' },
+    { bg: 'bg15-3.jpg', textColor: 'white' },
+    { bg: 'bg15-4.jpg', textColor: 'white' },
   ],
 ];

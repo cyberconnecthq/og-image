@@ -4,13 +4,10 @@
     { "source": "/og.png", "destination": "/api/index" },
     { "source": "/download.png", "destination": "/api/index" },
     { "source": "/poster", "destination": "/api/poster" },
-    { "source": "/badge", "destination": "/api/badge" }
+    { "source": "/badge", "destination": "/api/badge" },
+    { "source": "/offlineEventPoster", "destination": "/api/offlineEvent" },
+    { "source": "/invitationCard", "destination": "/api/invitationCard" },
+    { "source": "/offliveEventQrcode", "destination": "/api/offlineEventQrcode" }
   ],
-  "regions": ["sfo1", "lhr1", "hkg1", "syd1"],
-  "functions": {
-    "api/poster.ts": {
-      "memory": 3008,
-      "maxDuration": 30
-    }
-  }
+  "regions": ["sfo1", "lhr1", "hkg1", "syd1"]
 }
