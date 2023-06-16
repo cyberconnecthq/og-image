@@ -69,7 +69,7 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
       posterType: getString(query.posterType, 'Standard'),
       bgType: getNumber(query.bgType),
       bgNumber: getNumber(query.bgNumber),
-      eventTitle: emojify(decodeURIComponent(getString(query.eventTitle))),
+      eventTitle: emojify(decodeURIComponent(getString(query.eventTitle).replace(/%/g, '%25'))),
       time: getString(query.time),
       place: getString(query.place, 'twitter'),
       raffleText: getString(query.raffleText),
@@ -106,7 +106,7 @@ export function parseRequest(imgType: ImgType, req: IncomingMessage): ParsedRequ
 export const parseOfflineEventQuery = (req: IncomingMessage): OfflineEventPosterReq => {
   const { pathname, query } = parse(req.url || '/', true);
   return {
-    title: emojify(decodeURIComponent(getString(query.title))),
+    title: emojify(decodeURIComponent(getString(query.title).replace(/%/g, '%25'))),
     // startTime: getString(query.startTime),
     // endTime: getString(query.endTime),
     time: getString(query.time),
@@ -127,7 +127,7 @@ export const parseOfflineEventQrCodeQuery = (req: IncomingMessage): OfflineEvent
 export const parseInvitationQuery = (req: IncomingMessage): InvitationCardReq => {
   const { pathname, query } = parse(req.url || '/', true);
   return {
-    title: emojify(decodeURIComponent(getString(query.title))),
+    title: emojify(decodeURIComponent(getString(query.title).replace(/%/g, '%25'))),
     time: getString(query.time),
     invitee: getString(query.invitee),
     venue: getString(query.venue, undefined),

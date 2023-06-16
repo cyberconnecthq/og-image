@@ -10,7 +10,10 @@ async function getPage(isDev: boolean) {
     try {
       const content = await _page.content();
       return _page;
-    } catch (e) {}
+    } catch (e) {
+      _page = null;
+      getPage(isDev);
+    }
   }
   const options = await getOptions(isDev);
   const browser = await core.launch(options);
